@@ -1,0 +1,47 @@
+<!-- Category Filter Bar & View Switching Tabs -->
+<div class="bg-white dark:bg-slate-900 rounded-2xl p-3 border border-slate-200/90 dark:border-slate-800 shadow-sm flex flex-wrap items-center justify-between gap-3 transition-colors">
+  <!-- Filter Chips -->
+  <div class="flex items-center flex-wrap gap-1.5" id="category-filter-bar">
+    <span class="text-[11px] font-bold text-slate-400 dark:text-slate-500 uppercase mr-1">Bộ lọc:</span>
+    <button onclick="filterCategory('all')" data-cat="all" class="cat-filter-btn px-3 py-1 rounded-xl text-xs font-bold bg-slate-900 dark:bg-indigo-600 text-white transition shadow-xs">
+      Tất cả (<span id="count-all">0</span>)
+    </button>
+    <button onclick="filterCategory('university')" data-cat="university" class="cat-filter-btn px-2.5 py-1 rounded-xl text-xs font-semibold bg-slate-100 dark:bg-slate-800 hover:bg-indigo-50 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 transition">
+      🏫 Trường (<span id="count-university">0</span>)
+    </button>
+    <button onclick="filterCategory('healthy')" data-cat="healthy" class="cat-filter-btn px-2.5 py-1 rounded-xl text-xs font-semibold bg-slate-100 dark:bg-slate-800 hover:bg-emerald-50 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 transition">
+      🏃 Chạy bộ (<span id="count-healthy">0</span>)
+    </button>
+    <button onclick="filterCategory('english')" data-cat="english" class="cat-filter-btn px-2.5 py-1 rounded-xl text-xs font-semibold bg-slate-100 dark:bg-slate-800 hover:bg-amber-50 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 transition">
+      🇬🇧 Tiếng Anh (<span id="count-english">0</span>)
+    </button>
+    <button onclick="filterCategory('code')" data-cat="code" class="cat-filter-btn px-2.5 py-1 rounded-xl text-xs font-semibold bg-slate-100 dark:bg-slate-800 hover:bg-sky-50 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 transition">
+      💻 Code (<span id="count-code">0</span>)
+    </button>
+    <button onclick="filterCategory('project')" data-cat="project" class="cat-filter-btn px-2.5 py-1 rounded-xl text-xs font-semibold bg-slate-100 dark:bg-slate-800 hover:bg-purple-50 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 transition">
+      🚀 Dự án (<span id="count-project">0</span>)
+    </button>
+    <button onclick="filterCategory('life')" data-cat="life" class="cat-filter-btn px-2.5 py-1 rounded-xl text-xs font-semibold bg-slate-100 dark:bg-slate-800 hover:bg-orange-50 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 transition">
+      🍳 Nấu ăn (<span id="count-life">0</span>)
+    </button>
+    <button onclick="filterCategory('leisure')" data-cat="leisure" class="cat-filter-btn px-2.5 py-1 rounded-xl text-xs font-semibold bg-slate-100 dark:bg-slate-800 hover:bg-rose-50 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 transition">
+      🎮 Giải trí (<span id="count-leisure">0</span>)
+    </button>
+  </div>
+
+  <!-- View switch button -->
+  <div class="flex items-center space-x-1 border border-slate-200 dark:border-slate-700 rounded-xl p-1 bg-slate-50 dark:bg-slate-800 shadow-2xs transition-colors">
+    <button id="tab-day-btn" onclick="switchTab('day')" class="px-3 py-1.5 text-xs font-semibold rounded-lg text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition flex items-center">
+      <i class="fa-solid fa-calendar-day mr-1.5 text-indigo-500"></i> Ngày
+    </button>
+    <button id="tab-week-btn" onclick="switchTab('week')" class="px-3 py-1.5 text-xs font-bold rounded-lg bg-white dark:bg-slate-900 text-indigo-600 dark:text-indigo-400 shadow-sm transition flex items-center">
+      <i class="fa-solid fa-table-columns mr-1.5 text-indigo-600 dark:text-indigo-400"></i> Tuần
+    </button>
+    <button id="tab-month-btn" onclick="switchTab('month')" class="px-3 py-1.5 text-xs font-semibold rounded-lg text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition flex items-center">
+      <i class="fa-solid fa-calendar-days mr-1.5 text-indigo-500"></i> Tháng
+    </button>
+    <button id="tab-list-btn" onclick="switchTab('list')" class="px-3 py-1.5 text-xs font-semibold rounded-lg text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition flex items-center">
+      <i class="fa-solid fa-list-ul mr-1.5 text-indigo-500"></i> Danh sách
+    </button>
+  </div>
+</div>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Smart Schedule Manager - Quản Lý Lịch Học & Tự Học Cân Bằng</title>
+  <!-- Anti-FOUC Early Theme Script -->
+  <script>
+    (function() {
+      const theme = localStorage.getItem('gg_cal_theme') || 'system';
+      if (theme === 'dark' || (theme === 'system' && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        document.documentElement.classList.add('dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+      }
+    })();
+  </script>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Font Awesome CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#eef2ff',
+              100: '#e0e7ff',
+              500: '#6366f1',
+              600: '#4f46e5',
+              700: '#4338ca',
+            }
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-100 min-h-screen flex flex-col antialiased transition-colors duration-150">
+
+  <!-- Header Component -->
+  {% include 'components/header.html' %}
+
+  <!-- Main Content Shell -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5 flex-1 w-full space-y-4">
+    
+    <!-- Top Stats & Semester Date Picker -->
+    {% include 'components/stats_overview.html' %}
+
+    <!-- Filter Bar & View Switching Tabs -->
+    {% include 'components/filter_tabs.html' %}
+
+    <!-- 1. Day View (Mỗi Ngày) -->
+    {% include 'components/view_day.html' %}
+
+    <!-- 2. Week View (Mỗi Tuần) -->
+    {% include 'components/view_week.html' %}
+
+    <!-- 3. Month View (Mỗi Tháng) -->
+    {% include 'components/view_month.html' %}
+
+    <!-- 4. List View (Danh Sách) -->
+    {% include 'components/view_list.html' %}
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 py-3 text-center text-xs text-slate-400 dark:text-slate-500 mt-auto transition-colors">
+    Smart Schedule Manager • Lịch Học Tập & Thói Quen Cân Bằng Toàn Diện (Nhịp 05:00 Sáng)
+  </footer>
+
+  <!-- Modals & Toasts Component -->
+  {% include 'components/modals.html' %}
+
+  <!-- Modular Scripts -->
+  <script src="{{ url_for('static', filename='js/theme.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/config.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/api.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/completion.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/tracker.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/views/dayView.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/views/weekView.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/views/monthView.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/views/listView.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/modals.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,58 @@
+<!-- VIEW 3: MONTH VIEW (MỖI THÁNG) -->
+<div id="view-month" class="space-y-4 hidden animate-in fade-in duration-150">
+  
+  <!-- Month Navigation & Controls Bar -->
+  <div class="bg-white dark:bg-slate-900 rounded-2xl p-4 border border-slate-200/90 dark:border-slate-800 shadow-sm flex flex-wrap items-center justify-between gap-3 transition-colors">
+    <div class="flex items-center space-x-2">
+      <button onclick="prevMonth()" class="p-2 rounded-xl text-slate-600 dark:text-slate-400 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 transition border border-slate-200 dark:border-slate-700" title="Tháng trước">
+        <i class="fa-solid fa-chevron-left text-xs"></i>
+      </button>
+      <h2 id="month-title-display" class="text-base font-extrabold text-slate-900 dark:text-white tracking-tight min-w-[140px] text-center">
+        Tháng 09 / 2026
+      </h2>
+      <button onclick="nextMonth()" class="p-2 rounded-xl text-slate-600 dark:text-slate-400 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 transition border border-slate-200 dark:border-slate-700" title="Tháng sau">
+        <i class="fa-solid fa-chevron-right text-xs"></i>
+      </button>
+      <button onclick="goToCurrentMonth()" class="px-3 py-1.5 rounded-xl text-xs font-bold text-indigo-600 dark:text-indigo-300 bg-indigo-50 dark:bg-indigo-950/80 hover:bg-indigo-100 dark:hover:bg-indigo-900 border border-indigo-200 dark:border-indigo-800 transition">
+        Hôm nay
+      </button>
+    </div>
+
+    <!-- Quick Semester Month Buttons -->
+    <div class="flex items-center space-x-1.5 bg-slate-100 dark:bg-slate-800 p-1 rounded-xl transition-colors">
+      <button onclick="setMonth(8)" id="btn-month-8" class="month-quick-btn px-2.5 py-1 text-xs font-bold rounded-lg transition bg-white dark:bg-slate-900 text-indigo-600 dark:text-indigo-400 shadow-2xs">T9/2026</button>
+      <button onclick="setMonth(9)" id="btn-month-9" class="month-quick-btn px-2.5 py-1 text-xs font-semibold text-slate-600 dark:text-slate-400 rounded-lg hover:text-slate-900 dark:hover:text-white transition">T10/2026</button>
+      <button onclick="setMonth(10)" id="btn-month-10" class="month-quick-btn px-2.5 py-1 text-xs font-semibold text-slate-600 dark:text-slate-400 rounded-lg hover:text-slate-900 dark:hover:text-white transition">T11/2026</button>
+      <button onclick="setMonth(11)" id="btn-month-11" class="month-quick-btn px-2.5 py-1 text-xs font-semibold text-slate-600 dark:text-slate-400 rounded-lg hover:text-slate-900 dark:hover:text-white transition">T12/2026</button>
+    </div>
+
+    <div class="text-xs font-medium text-slate-500 dark:text-slate-400 flex items-center space-x-1.5">
+      <i class="fa-solid fa-circle-info text-indigo-500 dark:text-indigo-400"></i>
+      <span>Bấm vào ô ngày bất kỳ để xem lịch chi tiết của ngày đó</span>
+    </div>
+  </div>
+
+  <!-- Month Calendar 7-Column Grid -->
+  <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/90 dark:border-slate-800 shadow-sm overflow-hidden transition-colors">
+    <div class="overflow-x-auto custom-scrollbar">
+      <div class="min-w-[850px]">
+        <!-- Day of Week Headers -->
+        <div class="grid grid-cols-7 bg-slate-50 dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 text-xs font-bold text-slate-700 dark:text-slate-200 text-center py-2.5">
+          <div class="text-indigo-900 dark:text-indigo-300">Thứ 2</div>
+          <div>Thứ 3</div>
+          <div>Thứ 4</div>
+          <div>Thứ 5</div>
+          <div>Thứ 6</div>
+          <div class="text-indigo-600 dark:text-indigo-400">Thứ 7</div>
+          <div class="text-rose-600 dark:text-rose-400">Chủ nhật</div>
+        </div>
+
+        <!-- Month Days Grid -->
+        <div class="grid grid-cols-7 divide-x divide-y divide-slate-100 dark:divide-slate-800 bg-slate-50/30 dark:bg-slate-950/40" id="month-grid-cells">
+          <!-- Rendered via JS -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

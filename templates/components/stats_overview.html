@@ -1,0 +1,104 @@
+<!-- Real-time Live Status, Productivity Score & Overview Banner -->
+<div class="space-y-3">
+  
+  <!-- Row 1: Live Clock & Current Focus Action Bar -->
+  <div class="grid grid-cols-1 lg:grid-cols-12 gap-3">
+    
+    <!-- Live Clock & Today Badge (cols 4) -->
+    <div class="lg:col-span-4 bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 rounded-2xl p-4 text-white shadow-sm border border-indigo-900/60 flex items-center justify-between">
+      <div class="flex items-center space-x-3">
+        <div class="w-11 h-11 rounded-xl bg-indigo-600/30 border border-indigo-500/40 flex items-center justify-center text-xl text-indigo-400 shrink-0">
+          <i class="fa-solid fa-clock"></i>
+        </div>
+        <div>
+          <div class="text-[10.5px] font-extrabold uppercase tracking-wider text-indigo-300 flex items-center gap-1.5">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> Thời gian thực tế
+          </div>
+          <div id="live-clock-time" class="text-2xl font-black font-mono tracking-tight text-white mt-0.5">
+            --:--:--
+          </div>
+          <div id="live-clock-date" class="text-xs text-slate-300 font-medium">
+            Đang tải...
+          </div>
+        </div>
+      </div>
+
+      <div class="flex flex-col items-end gap-1">
+        <span class="text-[10px] font-bold text-slate-400 uppercase">Học kỳ</span>
+        <button onclick="openCleanModal()" class="p-2 text-rose-400 hover:text-white hover:bg-rose-600/40 rounded-xl transition border border-rose-500/30 text-xs" title="Dọn dẹp sự kiện trùng trên Google Calendar">
+          <i class="fa-solid fa-broom mr-1"></i> Dọn trùng
+        </button>
+      </div>
+    </div>
+
+    <!-- Current Focus Pointer Card (cols 8) -->
+    <div class="lg:col-span-8" id="current-focus-card">
+      <!-- Populated via tracker.js in real time -->
+    </div>
+
+  </div>
+
+  <!-- Row 2: Comprehensive Evaluation Panel (Day / Week / Month) & Weekly Analytics -->
+  <div class="grid grid-cols-1 lg:grid-cols-12 gap-3">
+    
+    <!-- Productivity Evaluation Panel with Day / Week / Month Switcher (cols 6) -->
+    <div class="lg:col-span-6 bg-white dark:bg-slate-900 rounded-2xl p-4 border border-slate-200/90 dark:border-slate-800 shadow-sm flex flex-col justify-between transition-colors" id="productivity-panel">
+      <div>
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-[11px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider flex items-center">
+            <i class="fa-solid fa-square-check mr-1.5 text-emerald-500"></i> Bảng đánh giá năng suất
+          </span>
+          
+          <!-- Evaluation Tab Switcher (Day / Week / Month) -->
+          <div class="flex items-center space-x-1 bg-slate-100 dark:bg-slate-800 p-0.5 rounded-xl border border-slate-200/80 dark:border-slate-700 transition-colors">
+            <button id="eval-tab-day" onclick="setEvalMode('day')" class="px-2.5 py-1 text-[11px] font-bold rounded-lg bg-white dark:bg-slate-900 text-indigo-600 dark:text-indigo-400 shadow-2xs transition">
+              📅 Ngày
+            </button>
+            <button id="eval-tab-week" onclick="setEvalMode('week')" class="px-2.5 py-1 text-[11px] font-semibold text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition">
+              📊 Tuần
+            </button>
+            <button id="eval-tab-month" onclick="setEvalMode('month')" class="px-2.5 py-1 text-[11px] font-semibold text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition">
+              🗓️ Tháng
+            </button>
+            <button onclick="resetTodayCompletions()" class="text-slate-400 dark:text-slate-500 hover:text-rose-600 dark:hover:text-rose-400 p-1 transition text-xs ml-1" title="Đặt lại toàn bộ tiến độ hôm nay">
+              <i class="fa-solid fa-rotate-left"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Dynamic Content rendered via completion.js -->
+        <div id="evaluation-content-container" class="mt-1">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Weekly Analytics & Date Range (cols 6) -->
+    <div class="lg:col-span-6 bg-white dark:bg-slate-900 rounded-2xl p-4 border border-slate-200/90 dark:border-slate-800 shadow-sm flex flex-col justify-between transition-colors">
+      <div class="flex items-center justify-between mb-2">
+        <div class="flex items-center space-x-2">
+          <span class="text-[11px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider flex items-center">
+            <i class="fa-solid fa-chart-pie mr-1.5 text-indigo-500"></i> Phân bổ thời gian (09/2026 – 12/2026)
+          </span>
+        </div>
+        <div class="flex items-center space-x-2">
+          <span id="total-hours-badge" class="text-xs font-bold text-indigo-700 dark:text-indigo-300 bg-indigo-50 dark:bg-indigo-950/80 px-2.5 py-0.5 rounded-full border border-indigo-200 dark:border-indigo-800">
+            Tổng: 0h / tuần
+          </span>
+          <div class="hidden sm:flex items-center space-x-1 text-xs">
+            <input type="date" id="start-date" value="2026-09-01" class="border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 dark:text-slate-200 rounded-lg px-2 py-0.5 text-[11px] focus:ring-1 focus:ring-indigo-500 font-medium" />
+            <span class="text-slate-400 text-[10px]">-</span>
+            <input type="date" id="end-date" value="2026-12-31" class="border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 dark:text-slate-200 rounded-lg px-2 py-0.5 text-[11px] focus:ring-1 focus:ring-indigo-500 font-medium" />
+          </div>
+        </div>
+      </div>
+      
+      <!-- Category Hours Chips -->
+      <div class="grid grid-cols-3 sm:grid-cols-6 gap-2" id="stats-container">
+        <!-- Populated by JS -->
+      </div>
+    </div>
+
+  </div>
+
+</div>

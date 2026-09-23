@@ -1,0 +1,67 @@
+<!-- VIEW 2: WEEK VIEW (MỖI TUẦN - INTERACTIVE TIMELINE WITH WEEK NAVIGATION) -->
+<div id="view-week" class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/90 dark:border-slate-800 shadow-sm overflow-hidden animate-in fade-in duration-150 transition-colors">
+  
+  <!-- Week Controller & Title Bar -->
+  <div class="p-3 bg-slate-50/80 dark:bg-slate-800/80 border-b border-slate-200 dark:border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-2.5">
+    <div class="flex items-center space-x-2">
+      <i class="fa-solid fa-table-columns text-indigo-600 dark:text-indigo-400"></i>
+      <span class="font-bold text-xs text-slate-800 dark:text-slate-200">Ma trận tuần hoàn chỉnh (05:00 – 23:00)</span>
+    </div>
+
+    <!-- Week Navigation Controls -->
+    <div class="flex items-center space-x-1.5 bg-white dark:bg-slate-900 p-1 rounded-xl border border-slate-200 dark:border-slate-700 shadow-2xs">
+      <button onclick="prevWeek()" class="px-2 py-1 rounded-lg text-slate-500 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 transition text-xs font-semibold" title="Xem tuần trước">
+        <i class="fa-solid fa-chevron-left mr-1"></i> <span class="hidden sm:inline">Tuần trước</span>
+      </button>
+
+      <div id="week-title-display" class="px-3 py-1 text-xs font-extrabold text-indigo-600 dark:text-indigo-400 font-mono tracking-tight text-center min-w-[190px]">
+        Đang tải tuần...
+      </div>
+
+      <button onclick="nextWeek()" class="px-2 py-1 rounded-lg text-slate-500 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 transition text-xs font-semibold" title="Xem tuần kế tiếp">
+        <span class="hidden sm:inline">Tuần sau</span> <i class="fa-solid fa-chevron-right ml-1"></i>
+      </button>
+
+      <button onclick="goToCurrentWeek()" class="px-2 py-1 rounded-lg bg-indigo-50 dark:bg-indigo-950/80 text-indigo-600 dark:text-indigo-300 hover:bg-indigo-100 dark:hover:bg-indigo-900 transition text-xs font-bold border border-indigo-200 dark:border-indigo-800 ml-1" title="Về tuần hiện tại">
+        Hôm nay
+      </button>
+    </div>
+
+    <div class="text-[11px] text-slate-500 dark:text-slate-400 font-medium hidden md:block">
+      💡 Bấm ô trống để thêm nhanh hoạt động
+    </div>
+  </div>
+
+  <div class="overflow-x-auto custom-scrollbar">
+    <div class="min-w-[1020px]">
+      <!-- Week Header Row (Dynamic dates rendered by JS) -->
+      <div class="grid grid-cols-8 bg-slate-50 dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 text-xs font-bold text-slate-700 dark:text-slate-200 sticky top-0 z-20">
+        <div class="py-3 px-2 text-center text-slate-400 dark:text-slate-500 border-r border-slate-200 dark:border-slate-700 font-mono flex items-center justify-center">Giờ</div>
+        <div id="col-header-day-0" class="py-2.5 px-2 text-center border-r border-slate-200 dark:border-slate-700 flex flex-col items-center cursor-pointer transition"></div>
+        <div id="col-header-day-1" class="py-2.5 px-2 text-center border-r border-slate-200 dark:border-slate-700 flex flex-col items-center cursor-pointer transition"></div>
+        <div id="col-header-day-2" class="py-2.5 px-2 text-center border-r border-slate-200 dark:border-slate-700 flex flex-col items-center cursor-pointer transition"></div>
+        <div id="col-header-day-3" class="py-2.5 px-2 text-center border-r border-slate-200 dark:border-slate-700 flex flex-col items-center cursor-pointer transition"></div>
+        <div id="col-header-day-4" class="py-2.5 px-2 text-center border-r border-slate-200 dark:border-slate-700 flex flex-col items-center cursor-pointer transition"></div>
+        <div id="col-header-day-5" class="py-2.5 px-2 text-center border-r border-slate-200 dark:border-slate-700 flex flex-col items-center cursor-pointer transition"></div>
+        <div id="col-header-day-6" class="py-2.5 px-2 text-center flex flex-col items-center cursor-pointer transition"></div>
+      </div>
+
+      <!-- Timeline Grid Body -->
+      <div class="relative grid grid-cols-8" id="timeline-body">
+        <!-- Left Time Column (05:00 to 23:00) -->
+        <div class="border-r border-slate-200 dark:border-slate-800 bg-slate-50/60 dark:bg-slate-950/60 select-none" id="timeline-hours-col">
+          <!-- Rendered via JS -->
+        </div>
+
+        <!-- 7 Day Columns (Monday to Sunday) -->
+        <div class="day-column relative border-r border-slate-100 dark:border-slate-800" data-weekday="0" id="col-day-0"></div>
+        <div class="day-column relative border-r border-slate-100 dark:border-slate-800" data-weekday="1" id="col-day-1"></div>
+        <div class="day-column relative border-r border-slate-100 dark:border-slate-800" data-weekday="2" id="col-day-2"></div>
+        <div class="day-column relative border-r border-slate-100 dark:border-slate-800" data-weekday="3" id="col-day-3"></div>
+        <div class="day-column relative border-r border-slate-100 dark:border-slate-800" data-weekday="4" id="col-day-4"></div>
+        <div class="day-column relative border-r border-slate-100 dark:border-slate-800 bg-indigo-50/10 dark:bg-indigo-950/10" data-weekday="5" id="col-day-5"></div>
+        <div class="day-column relative bg-rose-50/10 dark:bg-rose-950/10" data-weekday="6" id="col-day-6"></div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,110 @@
+<!-- Header -->
+<header class="bg-white dark:bg-slate-900/95 border-b border-slate-200 dark:border-slate-800 sticky top-0 z-40 shadow-sm backdrop-blur-md bg-white/95 transition-colors">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex flex-wrap items-center justify-between gap-3">
+    <div class="flex items-center space-x-3">
+      <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-600 via-violet-600 to-emerald-500 flex items-center justify-center text-white shadow-md shadow-indigo-100 dark:shadow-none">
+        <i class="fa-solid fa-calendar-check text-lg"></i>
+      </div>
+      <div>
+        <div class="flex items-center space-x-2">
+          <h1 class="font-bold text-lg text-slate-900 dark:text-white leading-tight">Smart Schedule & Life Manager</h1>
+          <span class="px-2 py-0.5 text-[10px] font-bold rounded-full bg-indigo-50 dark:bg-indigo-950/80 text-indigo-700 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800">2026-2027</span>
+        </div>
+        <p class="text-xs text-slate-500 dark:text-slate-400">TKB Đại Học • Dậy 5h Chạy Bộ • Tiếng Anh • Luyện Code • Dự Án • Nấu Cơm & Giải Trí</p>
+      </div>
+    </div>
+
+    <!-- Action buttons, Theme Switcher & Presets in header -->
+    <div class="flex items-center flex-wrap gap-2">
+      <!-- Theme Switcher Dropdown -->
+      <div class="relative inline-block text-left">
+        <button onclick="toggleThemeMenu()" id="btn-theme-menu" class="inline-flex items-center px-3 py-2 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 text-xs font-bold rounded-xl transition border border-slate-200 dark:border-slate-700 shadow-2xs" title="Chuyển chế độ Sáng / Tối / Hệ thống">
+          <i id="theme-btn-icon" class="fa-solid fa-circle-half-stroke mr-1.5 text-indigo-500"></i>
+          <span id="theme-btn-label">Hệ thống</span>
+          <i class="fa-solid fa-chevron-down ml-1.5 text-[10px] opacity-70"></i>
+        </button>
+        
+        <div id="theme-dropdown" class="origin-top-right absolute right-0 mt-2 w-48 rounded-2xl shadow-xl bg-white dark:bg-slate-900 ring-1 ring-black ring-opacity-5 divide-y divide-slate-100 dark:divide-slate-800 hidden z-50 p-1.5 animate-in fade-in zoom-in-95 duration-100 border border-slate-200 dark:border-slate-800">
+          <div class="px-3 py-1.5 text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider">Chế độ hiển thị</div>
+          <div class="py-1 space-y-0.5">
+            <button onclick="setTheme('light')" id="theme-opt-light" class="w-full text-left px-2.5 py-2 rounded-xl text-xs hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 flex items-center justify-between transition">
+              <span class="flex items-center gap-2 font-medium">
+                <i class="fa-solid fa-sun text-amber-500 w-4 text-center"></i>
+                <span>Giao diện Sáng</span>
+              </span>
+              <i id="theme-check-light" class="fa-solid fa-check text-indigo-600 dark:text-indigo-400 text-xs hidden"></i>
+            </button>
+            <button onclick="setTheme('dark')" id="theme-opt-dark" class="w-full text-left px-2.5 py-2 rounded-xl text-xs hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 flex items-center justify-between transition">
+              <span class="flex items-center gap-2 font-medium">
+                <i class="fa-solid fa-moon text-indigo-400 w-4 text-center"></i>
+                <span>Giao diện Tối</span>
+              </span>
+              <i id="theme-check-dark" class="fa-solid fa-check text-indigo-600 dark:text-indigo-400 text-xs hidden"></i>
+            </button>
+            <button onclick="setTheme('system')" id="theme-opt-system" class="w-full text-left px-2.5 py-2 rounded-xl text-xs hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 flex items-center justify-between transition">
+              <span class="flex items-center gap-2 font-medium">
+                <i class="fa-solid fa-desktop text-emerald-500 w-4 text-center"></i>
+                <span>Theo hệ thống</span>
+              </span>
+              <i id="theme-check-system" class="fa-solid fa-check text-indigo-600 dark:text-indigo-400 text-xs hidden"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Preset Dropdown -->
+      <div class="relative inline-block text-left">
+        <button onclick="togglePresetMenu()" id="btn-preset-menu" class="inline-flex items-center px-3.5 py-2 bg-gradient-to-r from-indigo-50 to-violet-50 hover:from-indigo-100 hover:to-violet-100 dark:from-indigo-950/80 dark:to-violet-950/80 dark:hover:from-indigo-900 dark:hover:to-violet-900 text-indigo-700 dark:text-indigo-300 text-xs font-bold rounded-xl transition border border-indigo-200 dark:border-indigo-800 shadow-2xs">
+          <i class="fa-solid fa-wand-magic-sparkles mr-1.5 text-indigo-600 dark:text-indigo-400"></i>
+          <span>Mẫu Lịch Gợi Ý</span>
+          <i class="fa-solid fa-chevron-down ml-1.5 text-[10px]"></i>
+        </button>
+        
+        <div id="preset-dropdown" class="origin-top-right absolute right-0 mt-2 w-72 rounded-2xl shadow-xl bg-white dark:bg-slate-900 ring-1 ring-black ring-opacity-5 divide-y divide-slate-100 dark:divide-slate-800 hidden z-50 p-1.5 animate-in fade-in zoom-in-95 duration-100 border border-slate-200 dark:border-slate-800">
+          <div class="px-3 py-2 text-[11px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider">Chọn cấu hình lịch</div>
+          <div class="py-1 space-y-1">
+            <button onclick="applyPreset('balanced')" class="w-full text-left px-3 py-2.5 rounded-xl text-xs hover:bg-indigo-50 dark:hover:bg-slate-800 flex items-start space-x-2.5 transition group">
+              <span class="p-1.5 rounded-lg bg-indigo-100 dark:bg-indigo-950 text-indigo-600 dark:text-indigo-400 group-hover:bg-indigo-600 group-hover:text-white transition"><i class="fa-solid fa-star"></i></span>
+              <div>
+                <div class="font-bold text-slate-800 dark:text-slate-100">Lịch Tối Ưu Toàn Diện <span class="text-[10px] text-indigo-600 dark:text-indigo-300 bg-indigo-100 dark:bg-indigo-950 px-1.5 py-0.2 rounded font-semibold">Khuyên Dùng</span></div>
+                <div class="text-[11px] text-slate-500 dark:text-slate-400">05:00 Chạy bộ • Thứ 2 ở lại trường • 3 cữ TA/ngày • Dự án & LeetCode</div>
+              </div>
+            </button>
+            <button onclick="applyPreset('university')" class="w-full text-left px-3 py-2 rounded-xl text-xs hover:bg-slate-100 dark:hover:bg-slate-800 flex items-start space-x-2.5 transition">
+              <span class="p-1.5 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300"><i class="fa-solid fa-graduation-cap"></i></span>
+              <div>
+                <div class="font-bold text-slate-800 dark:text-slate-100">Chỉ 6 Môn Học Trường</div>
+                <div class="text-[11px] text-slate-500 dark:text-slate-400">Khôi phục chỉ giữ lại các môn trên lớp</div>
+              </div>
+            </button>
+          </div>
+          <div class="px-3 py-1.5 text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider">Thêm nhanh từng gói thói quen</div>
+          <div class="py-1 space-y-0.5">
+            <button onclick="applyPreset('add_english')" class="w-full text-left px-3 py-1.5 rounded-lg text-xs hover:bg-amber-50 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 flex items-center space-x-2">
+              <i class="fa-solid fa-language text-amber-500 w-4 text-center"></i>
+              <span class="font-semibold">+ Thêm Tiếng Anh 13:30 - 14:30 mỗi ngày</span>
+            </button>
+            <button onclick="applyPreset('add_code_project')" class="w-full text-left px-3 py-1.5 rounded-lg text-xs hover:bg-sky-50 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 flex items-center space-x-2">
+              <i class="fa-solid fa-laptop-code text-sky-500 w-4 text-center"></i>
+              <span class="font-semibold">+ Thêm Luyện Code & Sprint Dự án 20:00</span>
+            </button>
+            <button onclick="applyPreset('add_healthy')" class="w-full text-left px-3 py-1.5 rounded-lg text-xs hover:bg-emerald-50 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 flex items-center space-x-2">
+              <i class="fa-solid fa-person-running text-emerald-500 w-4 text-center"></i>
+              <span class="font-semibold">+ Thêm Chạy bộ 05:00 sáng & Nấu ăn</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <button onclick="openModal()" class="inline-flex items-center px-3.5 py-2 bg-indigo-50 hover:bg-indigo-100 dark:bg-indigo-950/80 dark:hover:bg-indigo-900 text-indigo-700 dark:text-indigo-300 text-xs font-semibold rounded-xl transition border border-indigo-200 dark:border-indigo-800 shadow-2xs">
+        <i class="fa-solid fa-plus mr-1.5"></i> Thêm hoạt động
+      </button>
+      <button onclick="exportICS()" id="btn-export-ics" class="inline-flex items-center px-3.5 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold rounded-xl transition shadow-sm shadow-indigo-200 dark:shadow-none">
+        <i class="fa-solid fa-file-arrow-down mr-1.5"></i> Xuất file .ics
+      </button>
+      <button onclick="openSyncModal()" class="inline-flex items-center px-3.5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold rounded-xl transition shadow-sm shadow-emerald-200 dark:shadow-none">
+        <i class="fa-brands fa-google mr-1.5"></i> Đẩy lên Google Calendar
+      </button>
+    </div>
+  </div>
+</header>

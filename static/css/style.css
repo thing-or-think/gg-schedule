@@ -1,0 +1,147 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
+body {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+/* Custom modern scrollbar */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+
+.dark .custom-scrollbar::-webkit-scrollbar-track {
+  background: #090d16;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+
+.dark .custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #334155;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+.dark .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #475569;
+}
+
+/* Fixed timeline slot row height */
+.time-slot-row {
+  height: 52px;
+}
+
+/* Event card smooth transition and hover pop effect */
+.event-card {
+  transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.event-card:hover {
+  z-index: 30 !important;
+  transform: scale(1.015) translateY(-1px);
+  box-shadow: 0 10px 20px -3px rgba(0, 0, 0, 0.2), 0 4px 6px -4px rgba(0, 0, 0, 0.15);
+}
+
+/* Real-time Indicator Line (Red NOW Line) */
+.now-indicator-line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background-color: #ef4444;
+  box-shadow: 0 0 10px rgba(239, 68, 68, 0.8), 0 0 20px rgba(239, 68, 68, 0.4);
+  z-index: 25;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+}
+
+.now-indicator-badge {
+  position: absolute;
+  left: -2px;
+  background-color: #ef4444;
+  color: white;
+  font-size: 9px;
+  font-weight: 800;
+  padding: 1px 5px;
+  border-radius: 4px;
+  box-shadow: 0 2px 6px rgba(239, 68, 68, 0.5);
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  pointer-events: auto;
+}
+
+.pulse-dot {
+  width: 6px;
+  height: 6px;
+  background-color: white;
+  border-radius: 50%;
+  display: inline-block;
+  animation: pulse-dot-anim 1.2s infinite cubic-bezier(0.4, 0, 0.6, 1);
+}
+
+@keyframes pulse-dot-anim {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(1.3); }
+}
+
+/* Active In-Progress Glowing Event Card */
+.activity-active-glow {
+  ring: 3px solid #6366f1;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.6), 0 8px 25px -4px rgba(99, 102, 241, 0.35) !important;
+  animation: card-pulse-anim 2.5s infinite ease-in-out;
+}
+
+.dark .activity-active-glow {
+  box-shadow: 0 0 0 3px rgba(129, 140, 248, 0.8), 0 8px 25px -4px rgba(99, 102, 241, 0.5) !important;
+}
+
+@keyframes card-pulse-anim {
+  0%, 100% {
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.6), 0 8px 20px -4px rgba(99, 102, 241, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 0 5px rgba(99, 102, 241, 0.9), 0 12px 28px -2px rgba(99, 102, 241, 0.5);
+  }
+}
+
+/* Completed Task Styles */
+.task-completed {
+  opacity: 0.68;
+  background-color: #f8fafc !important;
+  border-color: #cbd5e1 !important;
+  border-left-color: #10b981 !important;
+}
+
+.dark .task-completed {
+  opacity: 0.55;
+  background-color: #0b1120 !important;
+  border-color: #1e293b !important;
+  border-left-color: #10b981 !important;
+}
+
+.task-completed .task-title {
+  text-decoration: line-through;
+  color: #64748b !important;
+}
+
+.dark .task-completed .task-title {
+  color: #64748b !important;
+}
+
+/* Live Clock Pulsing Animation */
+.live-clock-badge {
+  background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+  border: 1px solid rgba(99, 102, 241, 0.3);
+  box-shadow: 0 4px 15px -3px rgba(15, 23, 42, 0.3);
+}

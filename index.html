@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Smart Schedule Manager - Quản Lý Lịch Học & Tự Học Cân Bằng</title>
+  
+  <!-- Anti-FOUC Early Theme Script -->
+  <script>
+    (function() {
+      const theme = localStorage.getItem('gg_cal_theme') || 'system';
+      if (theme === 'dark' || (theme === 'system' && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        document.documentElement.classList.add('dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+      }
+    })();
+  </script>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Font Awesome CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <!-- Google Identity Services (GIS) Client SDK for client-side Google Calendar API -->
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="/src/style.css" />
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#eef2ff',
+              100: '#e0e7ff',
+              500: '#6366f1',
+              600: '#4f46e5',
+              700: '#4338ca',
+            }
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-100 min-h-screen flex flex-col antialiased transition-colors duration-150">
+
+  <!-- HEADER -->
+  <header class="bg-white dark:bg-slate-900/95 border-b border-slate-200 dark:border-slate-800 sticky top-0 z-40 shadow-sm backdrop-blur-md bg-white/95 transition-colors">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex flex-wrap items-center justify-between gap-3">
+      <div class="flex items-center space-x-3">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-600 via-violet-600 to-emerald-500 flex items-center justify-center text-white shadow-md shadow-indigo-100 dark:shadow-none">
+          <i class="fa-solid fa-calendar-check text-lg"></i>
+        </div>
+        <div>
+          <div class="flex items-center space-x-2">
+            <h1 class="font-bold text-lg text-slate-900 dark:text-white leading-tight">Smart Schedule & Life Manager</h1>
+            <span class="px-2 py-0.5 text-[10px] font-bold rounded-full bg-indigo-50 dark:bg-indigo-950/80 text-indigo-700 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800">2026-2027</span>
+          </div>
+          <p class="text-xs text-slate-500 dark:text-slate-400">TKB Đại Học • Dậy 5h Chạy Bộ • Tiếng Anh • Luyện Code • Dự Án • Nấu Cơm & Giải Trí</p>
+        </div>
+      </div>
+
+      <!-- Action buttons, Theme Switcher & Presets in header -->
+      <div class="flex items-center flex-wrap gap-2">
+        <!-- Theme Switcher Dropdown -->
+        <div class="relative inline-block text-left">
+          <button onclick="toggleThemeMenu()" id="btn-theme-menu" class="inline-flex items-center px-3 py-2 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 text-xs font-bold rounded-xl transition border border-slate-200 dark:border-slate-700 shadow-2xs" title="Chuyển chế độ Sáng / Tối / Hệ thống">
+            <i id="theme-btn-icon" class="fa-solid fa-circle-half-stroke mr-1.5 text-indigo-500"></i>
+            <span id="theme-btn-label">Hệ thống</span>
+            <i class="fa-solid fa-chevron-down ml-1.5 text-[10px] opacity-70"></i>
+          </button>
+          
+          <div id="theme-dropdown" class="origin-top-right absolute right-0 mt-2 w-48 rounded-2xl shadow-xl bg-white dark:bg-slate-900 ring-1 ring-black ring-opacity-5 divide-y divide-slate-100 dark:divide-slate-800 hidden z-50 p-1.5 animate-in fade-in zoom-in-95 duration-100 border border-slate-200 dark:border-slate-800">
+            <div class="px-3 py-1.5 text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider">Chế độ hiển thị</div>
+            <div class="py-1 space-y-0.5">
+              <button onclick="setTheme('light')" id="theme-opt-light" class="w-full text-left px-2.5 py-2 rounded-xl text-xs hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 flex items-center justify-between transition">
+                <span class="flex items-center gap-2 font-medium">
+                  <i class="fa-solid fa-sun text-amber-500 w-4 text-center"></i>
+                  <span>Giao diện Sáng</span>
+                </span>
+                <i id="theme-check-light" class="fa-solid fa-check text-indigo-600 dark:text-indigo-400 text-xs hidden"></i>
+              </button>
+              <button onclick="setTheme('dark')" id="theme-opt-dark" class="w-full text-left px-2.5 py-2 rounded-xl text-xs hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 flex items-center justify-between transition">
+                <span class="flex items-center gap-2 font-medium">
+                  <i class="fa-solid fa-moon text-indigo-400 w-4 text-center"></i>
+                  <span>Giao diện Tối</span>
+                </span>
+                <i id="theme-check-dark" class="fa-solid fa-check text-indigo-600 dark:text-indigo-400 text-xs hidden"></i>
+              </button>
+              <button onclick="setTheme('system')" id="theme-opt-system" class="w-full text-left px-2.5 py-2 rounded-xl text-xs hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 flex items-center justify-between transition">
+                <span class="flex items-center gap-2 font-medium">
+                  <i class="fa-solid fa-desktop text-emerald-500 w-4 text-center"></i>
+                  <span>Theo hệ thống</span>
+                </span>
+                <i id="theme-check-system" class="fa-solid fa-check text-indigo-600 dark:text-indigo-400 text-xs hidden"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Preset Dropdown -->
+        <div class="relative inline-block text-left">
+          <button onclick="togglePresetMenu()" id="btn-preset-menu" class="inline-flex items-center px-3.5 py-2 bg-gradient-to-r from-indigo-50 to-violet-50 hover:from-indigo-100 hover:to-violet-100 dark:from-indigo-950/80 dark:to-violet-950/80 dark:hover:from-indigo-900 dark:hover:to-violet-900 text-indigo-700 dark:text-indigo-300 text-xs font-bold rounded-xl transition border border-indigo-200 dark:border-indigo-800 shadow-2xs">
+            <i class="fa-solid fa-wand-magic-sparkles mr-1.5 text-indigo-600 dark:text-indigo-400"></i>
+            <span>Mẫu Lịch Gợi Ý</span>
+            <i class="fa-solid fa-chevron-down ml-1.5 text-[10px]"></i>
+          </button>
+          
+          <div id="preset-dropdown" class="origin-top-right absolute right-0 mt-2 w-72 rounded-2xl shadow-xl bg-white dark:bg-slate-900 ring-1 ring-black ring-opacity-5 divide-y divide-slate-100 dark:divide-slate-800 hidden z-50 p-1.5 animate-in fade-in zoom-in-95 duration-100 border border-slate-200 dark:border-slate-800">
+            <div class="px-3 py-2 text-[11px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider">Chọn cấu hình lịch</div>
+            <div class="py-1 space-y-1">
+              <button onclick="applyPreset('balanced')" class="w-full text-left px-3 py-2.5 rounded-xl text-xs hover:bg-indigo-50 dark:hover:bg-slate-800 flex items-start space-x-2.5 transition group">
+                <span class="p-1.5 rounded-lg bg-indigo-100 dark:bg-indigo-950 text-indigo-600 dark:text-indigo-400 group-hover:bg-indigo-600 group-hover:text-white transition"><i class="fa-solid fa-star"></i></span>
+                <div>
+                  <div class="font-bold text-slate-800 dark:text-slate-100">Lịch Tối Ưu Toàn Diện <span class="text-[10px] text-indigo-600 dark:text-indigo-300 bg-indigo-100 dark:bg-indigo-950 px-1.5 py-0.2 rounded font-semibold">Khuyên Dùng</span></div>
+                  <div class="text-[11px] text-slate-500 dark:text-slate-400">05:00 Chạy bộ • Thứ 2 ở lại trường • 3 cữ TA/ngày • Dự án & LeetCode</div>
+                </div>
+              </button>
+              <button onclick="applyPreset('university')" class="w-full text-left px-3 py-2 rounded-xl text-xs hover:bg-slate-100 dark:hover:bg-slate-800 flex items-start space-x-2.5 transition">
+                <span class="p-1.5 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300"><i class="fa-solid fa-graduation-cap"></i></span>
+                <div>
+                  <div class="font-bold text-slate-800 dark:text-slate-100">Chỉ 6 Môn Học Trường</div>
+                  <div class="text-[11px] text-slate-500 dark:text-slate-400">Khôi phục chỉ giữ lại các môn trên lớp</div>
+                </div>
+              </button>
+            </div>
+            <div class="px-3 py-1.5 text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider">Thêm nhanh từng gói thói quen</div>
+            <div class="py-1 space-y-0.5">
+              <button onclick="applyPreset('add_english')" class="w-full text-left px-3 py-1.5 rounded-lg text-xs hover:bg-amber-50 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 flex items-center space-x-2">
+                <i class="fa-solid fa-language text-amber-500 w-4 text-center"></i>
+                <span class="font-semibold">+ Thêm Tiếng Anh 13:30 - 14:30 mỗi ngày</span>
+              </button>
+              <button onclick="applyPreset('add_code_project')" class="w-full text-left px-3 py-1.5 rounded-lg text-xs hover:bg-sky-50 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 flex items-center space-x-2">
+                <i class="fa-solid fa-laptop-code text-sky-500 w-4 text-center"></i>
+                <span class="font-semibold">+ Thêm Luyện Code & Sprint Dự án 20:00</span>
+              </button>
+              <button onclick="applyPreset('add_healthy')" class="w-full text-left px-3 py-1.5 rounded-lg text-xs hover:bg-emerald-50 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 flex items-center space-x-2">
+                <i class="fa-solid fa-person-running text-emerald-500 w-4 text-center"></i>
+                <span class="font-semibold">+ Thêm Chạy bộ 05:00 sáng & Nấu ăn</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Backup JSON dropdown / buttons -->
+        <button onclick="exportJSON()" class="inline-flex items-center px-3 py-2 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 text-xs font-semibold rounded-xl transition border border-slate-200 dark:border-slate-700 shadow-2xs" title="Sao lưu toàn bộ lịch ra file JSON">
+          <i class="fa-solid fa-download mr-1.5 text-indigo-500"></i> Xuất JSON
+        </button>
+        <button onclick="importJSON()" class="inline-flex items-center px-3 py-2 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 text-xs font-semibold rounded-xl transition border border-slate-200 dark:border-slate-700 shadow-2xs" title="Khôi phục lịch từ file JSON sao lưu">
+          <i class="fa-solid fa-upload mr-1.5 text-indigo-500"></i> Nạp JSON
+        </button>
+
+        <button onclick="openModal()" class="inline-flex items-center px-3.5 py-2 bg-indigo-50 hover:bg-indigo-100 dark:bg-indigo-950/80 dark:hover:bg-indigo-900 text-indigo-700 dark:text-indigo-300 text-xs font-semibold rounded-xl transition border border-indigo-200 dark:border-indigo-800 shadow-2xs">
+          <i class="fa-solid fa-plus mr-1.5"></i> Thêm hoạt động
+        </button>
+        <button onclick="exportICS()" id="btn-export-ics" class="inline-flex items-center px-3.5 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold rounded-xl transition shadow-sm shadow-indigo-200 dark:shadow-none">
+          <i class="fa-solid fa-file-arrow-down mr-1.5"></i> Xuất file .ics
+        </button>
+        <button onclick="openSyncModal()" class="inline-flex items-center px-3.5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold rounded-xl transition shadow-sm shadow-emerald-200 dark:shadow-none">
+          <i class="fa-brands fa-google mr-1.5"></i> Đẩy lên Google Calendar
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN CONTENT SHELL -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5 flex-1 w-full space-y-4">
+    
+    <!-- Top Stats & Semester Date Picker -->
+    <div class="space-y-3">
+      <!-- Row 1: Live Clock & Current Focus Action Bar -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-3">
+        <!-- Live Clock & Today Badge (cols 4) -->
+        <div class="lg:col-span-4 bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 rounded-2xl p-4 text-white shadow-sm border border-indigo-900/60 flex items-center justify-between">
+          <div class="flex items-center space-x-3">
+            <div class="w-11 h-11 rounded-xl bg-indigo-600/30 border border-indigo-500/40 flex items-center justify-center text-xl text-indigo-400 shrink-0">
+              <i class="fa-solid fa-clock"></i>
+            </div>
+            <div>
+              <div class="text-[10.5px] font-extrabold uppercase tracking-wider text-indigo-300 flex items-center gap-1.5">
+                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> Thời gian thực tế
+              </div>
+              <div id="live-clock-time" class="text-2xl font-black font-mono tracking-tight text-white mt-0.5">
+                --:--:--
+              </div>
+              <div id="live-clock-date" class="text-xs text-slate-300 font-medium">
+                Đang tải...
+              </div>
+            </div>
+          </div>
+
+          <div class="flex flex-col items-end gap-1">
+            <span class="text-[10px] font-bold text-slate-400 uppercase">Học kỳ</span>
+            <button onclick="openCleanModal()" class="p-2 text-rose-400 hover:text-white hover:bg-rose-600/40 rounded-xl transition border border-rose-500/30 text-xs" title="Dọn dẹp sự kiện trùng trên Google Calendar">
+              <i class="fa-solid fa-broom mr-1"></i> Dọn trùng
+            </button>
+          </div>
+        </div>
+
+        <!-- Current Focus Pointer Card (cols 8) -->
+        <div class="lg:col-span-8" id="current-focus-card">
+          <!-- Populated via tracker.ts in real time -->
+        </div>
+      </div>
+
+      <!-- Row 2: Comprehensive Evaluation Panel & Weekly Analytics -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-3">
+        <!-- Productivity Evaluation Panel (cols 6) -->
+        <div class="lg:col-span-6 bg-white dark:bg-slate-900 rounded-2xl p-4 border border-slate-200/90 dark:border-slate-800 shadow-sm flex flex-col justify-between transition-colors" id="productivity-panel">
+          <div>
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-[11px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider flex items-center">
+                <i class="fa-solid fa-square-check mr-1.5 text-emerald-500"></i> Bảng đánh giá năng suất
+              </span>
+              
+              <div class="flex items-center space-x-1 bg-slate-100 dark:bg-slate-800 p-0.5 rounded-xl border border-slate-200/80 dark:border-slate-700 transition-colors">
+                <button id="eval-tab-day" onclick="setEvalMode('day')" class="px-2.5 py-1 text-[11px] font-bold rounded-lg bg-white dark:bg-slate-900 text-indigo-600 dark:text-indigo-400 shadow-2xs transition">
+                  📅 Ngày
+                </button>
+                <button id="eval-tab-week" onclick="setEvalMode('week')" class="px-2.5 py-1 text-[11px] font-semibold text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition">
+                  📊 Tuần
+                </button>
+                <button id="eval-tab-month" onclick="setEvalMode('month')" class="px-2.5 py-1 text-[11px] font-semibold text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition">
+                  🗓️ Tháng
+                </button>
+                <button onclick="resetTodayCompletions()" class="text-slate-400 dark:text-slate-500 hover:text-rose-600 dark:hover:text-rose-400 p-1 transition text-xs ml-1" title="Đặt lại toàn bộ tiến độ ngày này">
+                  <i class="fa-solid fa-rotate-left"></i>
+                </button>
+              </div>
+            </div>
+
+            <div id="evaluation-content-container" class="mt-1">
+              <!-- Populated by TS -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Weekly Analytics & Date Range (cols 6) -->
+        <div class="lg:col-span-6 bg-white dark:bg-slate-900 rounded-2xl p-4 border border-slate-200/90 dark:border-slate-800 shadow-sm flex flex-col justify-between transition-colors">
+          <div class="flex items-center justify-between mb-2">
+            <div class="flex items-center space-x-2">
+              <span class="text-[11px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider flex items-center">
+                <i class="fa-solid fa-chart-pie mr-1.5 text-indigo-500"></i> Phân bổ thời gian (09/2026 – 12/2026)
+              </span>
+            </div>
+            <div class="flex items-center space-x-2">
+              <span id="total-hours-badge" class="text-xs font-bold text-indigo-700 dark:text-indigo-300 bg-indigo-50 dark:bg-indigo-950/80 px-2.5 py-0.5 rounded-full border border-indigo-200 dark:border-indigo-800">
+                Tổng: 0h / tuần
+              </span>
+              <div class="hidden sm:flex items-center space-x-1 text-xs">
+                <input type="date" id="start-date" value="2026-09-01" class="border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 dark:text-slate-200 rounded-lg px-2 py-0.5 text-[11px] focus:ring-1 focus:ring-indigo-500 font-medium" />
+                <span class="text-slate-400 text-[10px]">-</span>
+                <input type="date" id="end-date" value="2026-12-31" class="border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 dark:text-slate-200 rounded-lg px-2 py-0.5 text-[11px] focus:ring-1 focus:ring-indigo-500 font-medium" />
+              </div>
+            </div>
+          </div>
+          
+          <!-- Category Hours Chips -->
+          <div class="grid grid-cols-3 sm:grid-cols-6 gap-2" id="stats-container">
+            <!-- Populated by TS -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Filter Bar & View Switching Tabs -->
+    <div class="bg-white dark:bg-slate-900 rounded-2xl p-3 border border-slate-200/90 dark:border-slate-800 shadow-sm flex flex-wrap items-center justify-between gap-3 transition-colors">
+      <!-- Filter Chips -->
+      <div class="flex items-center flex-wrap gap-1.5" id="category-filter-bar">
+        <span class="text-[11px] font-bold text-slate-400 dark:text-slate-500 uppercase mr-1">Bộ lọc:</span>
+        <button onclick="filterCategory('all')" data-cat="all" class="cat-filter-btn px-3 py-1 rounded-xl text-xs font-bold bg-slate-900 dark:bg-indigo-600 text-white transition shadow-xs">
+          Tất cả (<span id="count-all">0</span>)
+        </button>
+        <button onclick="filterCategory('university')" data-cat="university" class="cat-filter-btn px-2.5 py-1 rounded-xl text-xs font-semibold bg-slate-100 dark:bg-slate-800 hover:bg-indigo-50 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 transition">
+          🏫 Trường (<span id="count-university">0</span>)
+        </button>
+        <button onclick="filterCategory('healthy')" data-cat="healthy" class="cat-filter-btn px-2.5 py-1 rounded-xl text-xs font-semibold bg-slate-100 dark:bg-slate-800 hover:bg-emerald-50 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 transition">
+          🏃 Chạy bộ (<span id="count-healthy">0</span>)
+        </button>
+        <button onclick="filterCategory('english')" data-cat="english" class="cat-filter-btn px-2.5 py-1 rounded-xl text-xs font-semibold bg-slate-100 dark:bg-slate-800 hover:bg-amber-50 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 transition">
+          🇬🇧 Tiếng Anh (<span id="count-english">0</span>)
+        </button>
+        <button onclick="filterCategory('code')" data-cat="code" class="cat-filter-btn px-2.5 py-1 rounded-xl text-xs font-semibold bg-slate-100 dark:bg-slate-800 hover:bg-sky-50 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 transition">
+          💻 Code (<span id="count-code">0</span>)
+        </button>
+        <button onclick="filterCategory('project')" data-cat="project" class="cat-filter-btn px-2.5 py-1 rounded-xl text-xs font-semibold bg-slate-100 dark:bg-slate-800 hover:bg-purple-50 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 transition">
+          🚀 Dự án (<span id="count-project">0</span>)
+        </button>
+        <button onclick="filterCategory('life')" data-cat="life" class="cat-filter-btn px-2.5 py-1 rounded-xl text-xs font-semibold bg-slate-100 dark:bg-slate-800 hover:bg-orange-50 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 transition">
+          🍳 Nấu ăn (<span id="count-life">0</span>)
+        </button>
+        <button onclick="filterCategory('leisure')" data-cat="leisure" class="cat-filter-btn px-2.5 py-1 rounded-xl text-xs font-semibold bg-slate-100 dark:bg-slate-800 hover:bg-rose-50 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 transition">
+          🎮 Giải trí (<span id="count-leisure">0</span>)
+        </button>
+      </div>
+
+      <!-- View switch button -->
+      <div class="flex items-center space-x-1 border border-slate-200 dark:border-slate-700 rounded-xl p-1 bg-slate-50 dark:bg-slate-800 shadow-2xs transition-colors">
+        <button id="tab-day-btn" onclick="switchTab('day')" class="px-3 py-1.5 text-xs font-semibold rounded-lg text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition flex items-center">
+          <i class="fa-solid fa-calendar-day mr-1.5 text-indigo-500"></i> Ngày
+        </button>
+        <button id="tab-week-btn" onclick="switchTab('week')" class="px-3 py-1.5 text-xs font-bold rounded-lg bg-white dark:bg-slate-900 text-indigo-600 dark:text-indigo-400 shadow-sm transition flex items-center">
+          <i class="fa-solid fa-table-columns mr-1.5 text-indigo-600 dark:text-indigo-400"></i> Tuần
+        </button>
+        <button id="tab-month-btn" onclick="switchTab('month')" class="px-3 py-1.5 text-xs font-semibold rounded-lg text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition flex items-center">
+          <i class="fa-solid fa-calendar-days mr-1.5 text-indigo-500"></i> Tháng
+        </button>
+        <button id="tab-list-btn" onclick="switchTab('list')" class="px-3 py-1.5 text-xs font-semibold rounded-lg text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition flex items-center">
+          <i class="fa-solid fa-list-ul mr-1.5 text-indigo-500"></i> Danh sách
+        </button>
+      </div>
+    </div>
+
+    <!-- 1. Day View (Mỗi Ngày) -->
+    <div id="view-day" class="space-y-4 hidden animate-in fade-in duration-150">
+      <div class="bg-white dark:bg-slate-900 rounded-2xl p-2.5 border border-slate-200/90 dark:border-slate-800 shadow-sm flex items-center justify-between gap-2 overflow-x-auto custom-scrollbar transition-colors">
+        <div class="flex items-center space-x-1 shrink-0">
+          <button onclick="prevDay()" class="p-2 rounded-xl text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white transition" title="Ngày trước">
+            <i class="fa-solid fa-chevron-left text-xs"></i>
+          </button>
+          <button onclick="locateTodayOnCalendar()" class="px-2.5 py-1.5 rounded-xl bg-indigo-50 dark:bg-indigo-950/80 text-indigo-600 dark:text-indigo-300 hover:bg-indigo-100 dark:hover:bg-indigo-900 transition text-xs font-bold border border-indigo-200 dark:border-indigo-800" title="Định vị về ngày hôm nay">
+            <i class="fa-solid fa-crosshairs mr-1"></i> Hôm nay
+          </button>
+        </div>
+
+        <div class="flex items-center gap-1.5 flex-1 min-w-[620px] justify-between" id="day-selector-pills">
+          <!-- Populated by TS -->
+        </div>
+
+        <button onclick="nextDay()" class="p-2 rounded-xl text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white transition shrink-0" title="Ngày sau">
+          <i class="fa-solid fa-chevron-right text-xs"></i>
+        </button>
+      </div>
+
+      <div id="day-theme-banner" class="bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 rounded-2xl p-4 sm:p-5 text-white shadow-md border border-indigo-900/50">
+        <!-- Rendered by TS -->
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-4">
+        <div class="lg:col-span-7 bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/90 dark:border-slate-800 shadow-sm overflow-hidden flex flex-col transition-colors">
+          <div class="p-3.5 bg-slate-50 dark:bg-slate-800/80 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between">
+            <div class="flex items-center space-x-2">
+              <i class="fa-solid fa-clock text-indigo-600 dark:text-indigo-400"></i>
+              <span class="font-bold text-xs text-slate-800 dark:text-slate-200">Khung thời gian trực quan (05:00 – 23:00)</span>
+            </div>
+            <button onclick="openModalForSelectedDay()" class="text-[11px] font-bold text-indigo-600 dark:text-indigo-300 hover:text-indigo-800 dark:hover:text-indigo-200 bg-indigo-50 dark:bg-indigo-950/80 hover:bg-indigo-100 dark:hover:bg-indigo-900 px-2.5 py-1 rounded-lg transition border border-indigo-200 dark:border-indigo-800">
+              <i class="fa-solid fa-plus mr-1"></i> Thêm vào ngày này
+            </button>
+          </div>
+
+          <div class="p-2 overflow-x-auto custom-scrollbar flex-1">
+            <div class="relative grid grid-cols-12 min-w-[420px]" id="day-timeline-body">
+              <div class="col-span-2 border-r border-slate-200 dark:border-slate-800 bg-slate-50/60 dark:bg-slate-950/60 select-none" id="day-timeline-hours-col"></div>
+              <div class="col-span-10 relative bg-white dark:bg-slate-900" id="day-timeline-events-col"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="lg:col-span-5 bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/90 dark:border-slate-800 shadow-sm overflow-hidden flex flex-col transition-colors">
+          <div class="p-3.5 bg-slate-50 dark:bg-slate-800/80 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between">
+            <div class="flex items-center space-x-2">
+              <i class="fa-solid fa-list-check text-indigo-600 dark:text-indigo-400"></i>
+              <span class="font-bold text-xs text-slate-800 dark:text-slate-200">Lộ trình thứ tự chi tiết</span>
+            </div>
+            <span id="day-agenda-count-badge" class="text-[11px] font-bold text-slate-600 dark:text-slate-300 bg-white dark:bg-slate-800 px-2 py-0.5 rounded-md border border-slate-200 dark:border-slate-700">
+              0 hoạt động
+            </span>
+          </div>
+
+          <div class="p-3 space-y-2.5 overflow-y-auto max-h-[850px] custom-scrollbar flex-1" id="day-agenda-stream">
+            <!-- Rendered by TS -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2. Week View (Mỗi Tuần) -->
+    <div id="view-week" class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/90 dark:border-slate-800 shadow-sm overflow-hidden animate-in fade-in duration-150 transition-colors">
+      <div class="p-3 bg-slate-50/80 dark:bg-slate-800/80 border-b border-slate-200 dark:border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-2.5">
+        <div class="flex items-center space-x-2">
+          <i class="fa-solid fa-table-columns text-indigo-600 dark:text-indigo-400"></i>
+          <span class="font-bold text-xs text-slate-800 dark:text-slate-200">Ma trận tuần hoàn chỉnh (05:00 – 23:00)</span>
+        </div>
+
+        <div class="flex items-center space-x-1.5 bg-white dark:bg-slate-900 p-1 rounded-xl border border-slate-200 dark:border-slate-700 shadow-2xs">
+          <button onclick="prevWeek()" class="px-2 py-1 rounded-lg text-slate-500 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 transition text-xs font-semibold" title="Xem tuần trước">
+            <i class="fa-solid fa-chevron-left mr-1"></i> <span class="hidden sm:inline">Tuần trước</span>
+          </button>
+          <div id="week-title-display" class="px-3 py-1 text-xs font-extrabold text-indigo-600 dark:text-indigo-400 font-mono tracking-tight text-center min-w-[190px]">
+            Đang tải tuần...
+          </div>
+          <button onclick="nextWeek()" class="px-2 py-1 rounded-lg text-slate-500 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 transition text-xs font-semibold" title="Xem tuần kế tiếp">
+            <span class="hidden sm:inline">Tuần sau</span> <i class="fa-solid fa-chevron-right ml-1"></i>
+          </button>
+          <button onclick="goToCurrentWeek()" class="px-2 py-1 rounded-lg bg-indigo-50 dark:bg-indigo-950/80 text-indigo-600 dark:text-indigo-300 hover:bg-indigo-100 dark:hover:bg-indigo-900 transition text-xs font-bold border border-indigo-200 dark:border-indigo-800 ml-1" title="Về tuần hiện tại">
+            Hôm nay
+          </button>
+        </div>
+
+        <div class="text-[11px] text-slate-500 dark:text-slate-400 font-medium hidden md:block">
+          💡 Bấm ô trống để thêm nhanh hoạt động
+        </div>
+      </div>
+
+      <div class="overflow-x-auto custom-scrollbar">
+        <div class="min-w-[1020px]">
+          <div class="grid grid-cols-8 bg-slate-50 dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 text-xs font-bold text-slate-700 dark:text-slate-200 sticky top-0 z-20">
+            <div class="py-3 px-2 text-center text-slate-400 dark:text-slate-500 border-r border-slate-200 dark:border-slate-700 font-mono flex items-center justify-center">Giờ</div>
+            <div id="col-header-day-0" class="py-2.5 px-2 text-center border-r border-slate-200 dark:border-slate-700 flex flex-col items-center cursor-pointer transition"></div>
+            <div id="col-header-day-1" class="py-2.5 px-2 text-center border-r border-slate-200 dark:border-slate-700 flex flex-col items-center cursor-pointer transition"></div>
+            <div id="col-header-day-2" class="py-2.5 px-2 text-center border-r border-slate-200 dark:border-slate-700 flex flex-col items-center cursor-pointer transition"></div>
+            <div id="col-header-day-3" class="py-2.5 px-2 text-center border-r border-slate-200 dark:border-slate-700 flex flex-col items-center cursor-pointer transition"></div>
+            <div id="col-header-day-4" class="py-2.5 px-2 text-center border-r border-slate-200 dark:border-slate-700 flex flex-col items-center cursor-pointer transition"></div>
+            <div id="col-header-day-5" class="py-2.5 px-2 text-center border-r border-slate-200 dark:border-slate-700 flex flex-col items-center cursor-pointer transition"></div>
+            <div id="col-header-day-6" class="py-2.5 px-2 text-center flex flex-col items-center cursor-pointer transition"></div>
+          </div>
+
+          <div class="relative grid grid-cols-8" id="timeline-body">
+            <div class="border-r border-slate-200 dark:border-slate-800 bg-slate-50/60 dark:bg-slate-950/60 select-none" id="timeline-hours-col"></div>
+            <div class="day-column relative border-r border-slate-100 dark:border-slate-800" data-weekday="0" id="col-day-0"></div>
+            <div class="day-column relative border-r border-slate-100 dark:border-slate-800" data-weekday="1" id="col-day-1"></div>
+            <div class="day-column relative border-r border-slate-100 dark:border-slate-800" data-weekday="2" id="col-day-2"></div>
+            <div class="day-column relative border-r border-slate-100 dark:border-slate-800" data-weekday="3" id="col-day-3"></div>
+            <div class="day-column relative border-r border-slate-100 dark:border-slate-800" data-weekday="4" id="col-day-4"></div>
+            <div class="day-column relative border-r border-slate-100 dark:border-slate-800 bg-indigo-50/10 dark:bg-indigo-950/10" data-weekday="5" id="col-day-5"></div>
+            <div class="day-column relative bg-rose-50/10 dark:bg-rose-950/10" data-weekday="6" id="col-day-6"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3. Month View (Mỗi Tháng) -->
+    <div id="view-month" class="space-y-4 hidden animate-in fade-in duration-150">
+      <div class="bg-white dark:bg-slate-900 rounded-2xl p-4 border border-slate-200/90 dark:border-slate-800 shadow-sm flex flex-wrap items-center justify-between gap-3 transition-colors">
+        <div class="flex items-center space-x-2">
+          <button onclick="prevMonth()" class="p-2 rounded-xl text-slate-600 dark:text-slate-400 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 transition border border-slate-200 dark:border-slate-700" title="Tháng trước">
+            <i class="fa-solid fa-chevron-left text-xs"></i>
+          </button>
+          <h2 id="month-title-display" class="text-base font-extrabold text-slate-900 dark:text-white tracking-tight min-w-[140px] text-center">
+            Tháng 09 / 2026
+          </h2>
+          <button onclick="nextMonth()" class="p-2 rounded-xl text-slate-600 dark:text-slate-400 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 transition border border-slate-200 dark:border-slate-700" title="Tháng sau">
+            <i class="fa-solid fa-chevron-right text-xs"></i>
+          </button>
+          <button onclick="goToCurrentMonth()" class="px-3 py-1.5 rounded-xl text-xs font-bold text-indigo-600 dark:text-indigo-300 bg-indigo-50 dark:bg-indigo-950/80 hover:bg-indigo-100 dark:hover:bg-indigo-900 border border-indigo-200 dark:border-indigo-800 transition">
+            Hôm nay
+          </button>
+        </div>
+
+        <div class="flex items-center space-x-1.5 bg-slate-100 dark:bg-slate-800 p-1 rounded-xl transition-colors">
+          <button onclick="setMonth(8)" id="btn-month-8" class="month-quick-btn px-2.5 py-1 text-xs font-bold rounded-lg transition bg-white dark:bg-slate-900 text-indigo-600 dark:text-indigo-400 shadow-2xs">T9/2026</button>
+          <button onclick="setMonth(9)" id="btn-month-9" class="month-quick-btn px-2.5 py-1 text-xs font-semibold text-slate-600 dark:text-slate-400 rounded-lg hover:text-slate-900 dark:hover:text-white transition">T10/2026</button>
+          <button onclick="setMonth(10)" id="btn-month-10" class="month-quick-btn px-2.5 py-1 text-xs font-semibold text-slate-600 dark:text-slate-400 rounded-lg hover:text-slate-900 dark:hover:text-white transition">T11/2026</button>
+          <button onclick="setMonth(11)" id="btn-month-11" class="month-quick-btn px-2.5 py-1 text-xs font-semibold text-slate-600 dark:text-slate-400 rounded-lg hover:text-slate-900 dark:hover:text-white transition">T12/2026</button>
+        </div>
+
+        <div class="text-xs font-medium text-slate-500 dark:text-slate-400 flex items-center space-x-1.5">
+          <i class="fa-solid fa-circle-info text-indigo-500 dark:text-indigo-400"></i>
+          <span>Bấm vào ô ngày bất kỳ để xem lịch chi tiết của ngày đó</span>
+        </div>
+      </div>
+
+      <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/90 dark:border-slate-800 shadow-sm overflow-hidden transition-colors">
+        <div class="overflow-x-auto custom-scrollbar">
+          <div class="min-w-[850px]">
+            <div class="grid grid-cols-7 bg-slate-50 dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 text-xs font-bold text-slate-700 dark:text-slate-200 text-center py-2.5">
+              <div class="text-indigo-900 dark:text-indigo-300">Thứ 2</div>
+              <div>Thứ 3</div>
+              <div>Thứ 4</div>
+              <div>Thứ 5</div>
+              <div>Thứ 6</div>
+              <div class="text-indigo-600 dark:text-indigo-400">Thứ 7</div>
+              <div class="text-rose-600 dark:text-rose-400">Chủ nhật</div>
+            </div>
+            <div class="grid grid-cols-7 divide-x divide-y divide-slate-100 dark:divide-slate-800 bg-slate-50/30 dark:bg-slate-950/40" id="month-grid-cells"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4. List View (Danh Sách) -->
+    <div id="view-list" class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/90 dark:border-slate-800 shadow-sm overflow-hidden hidden animate-in fade-in duration-150 transition-colors">
+      <div class="overflow-x-auto custom-scrollbar">
+        <table class="w-full text-left border-collapse">
+          <thead>
+            <tr class="bg-slate-50 dark:bg-slate-800 text-slate-500 dark:text-slate-400 text-[11px] uppercase tracking-wider font-bold border-b border-slate-200 dark:border-slate-700">
+              <th class="py-3.5 px-3 text-center w-12">Xong</th>
+              <th class="py-3.5 px-4">Loại</th>
+              <th class="py-3.5 px-4">Mã</th>
+              <th class="py-3.5 px-4">Tên hoạt động / Môn học</th>
+              <th class="py-3.5 px-4">Ghi chú / Lớp</th>
+              <th class="py-3.5 px-4">Thứ</th>
+              <th class="py-3.5 px-4">Thời gian</th>
+              <th class="py-3.5 px-4">Thời lượng</th>
+              <th class="py-3.5 px-4">Địa điểm</th>
+              <th class="py-3.5 px-4 text-right">Thao tác</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-100 dark:divide-slate-800 text-xs" id="list-table-body">
+            <!-- Populated via TS -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 py-3 text-center text-xs text-slate-400 dark:text-slate-500 mt-auto transition-colors">
+    Smart Schedule Manager • Lịch Học Tập & Thói Quen Cân Bằng Toàn Diện (Client-side Web App)
+  </footer>
+
+  <!-- MODAL: ADD / EDIT ACTIVITY -->
+  <div id="course-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-xs z-50 flex items-center justify-center hidden p-4 transition-all">
+    <div class="bg-white dark:bg-slate-900 rounded-2xl shadow-2xl border border-slate-200 dark:border-slate-800 max-w-lg w-full overflow-hidden animate-in fade-in zoom-in-95 duration-150">
+      <div class="px-6 py-4 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between">
+        <h3 id="modal-title" class="font-bold text-base text-slate-900 dark:text-white flex items-center space-x-2">
+          <i class="fa-solid fa-calendar-plus text-indigo-600 dark:text-indigo-400"></i>
+          <span>Thêm hoạt động mới</span>
+        </h3>
+        <button onclick="closeModal()" class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition text-lg">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <form id="course-form" onsubmit="saveCourse(event)" class="p-6 space-y-4 text-xs">
+        <input type="hidden" id="edit-index" value="-1" />
+
+        <!-- Category Picker -->
+        <div>
+          <label class="block font-semibold text-slate-700 dark:text-slate-300 mb-1">Phân loại hoạt động <span class="text-rose-500">*</span></label>
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-2" id="category-selector-group">
+            <label class="cursor-pointer border border-slate-200 dark:border-slate-700 rounded-xl p-2 flex items-center space-x-2 hover:bg-slate-50 dark:hover:bg-slate-800 transition has-[:checked]:border-indigo-600 dark:has-[:checked]:border-indigo-500 has-[:checked]:bg-indigo-50 dark:has-[:checked]:bg-indigo-950/70 has-[:checked]:text-indigo-900 dark:has-[:checked]:text-indigo-200">
+              <input type="radio" name="activity-category" value="university" onchange="onCategoryChange('university')" class="hidden" checked />
+              <span class="text-indigo-600 dark:text-indigo-400"><i class="fa-solid fa-graduation-cap"></i></span>
+              <span class="font-bold text-[11px]">Trường</span>
+            </label>
+            <label class="cursor-pointer border border-slate-200 dark:border-slate-700 rounded-xl p-2 flex items-center space-x-2 hover:bg-slate-50 dark:hover:bg-slate-800 transition has-[:checked]:border-emerald-600 dark:has-[:checked]:border-emerald-500 has-[:checked]:bg-emerald-50 dark:has-[:checked]:bg-emerald-950/70 has-[:checked]:text-emerald-900 dark:has-[:checked]:text-emerald-200">
+              <input type="radio" name="activity-category" value="healthy" onchange="onCategoryChange('healthy')" class="hidden" />
+              <span class="text-emerald-600 dark:text-emerald-400"><i class="fa-solid fa-person-running"></i></span>
+              <span class="font-bold text-[11px]">Chạy bộ</span>
+            </label>
+            <label class="cursor-pointer border border-slate-200 dark:border-slate-700 rounded-xl p-2 flex items-center space-x-2 hover:bg-slate-50 dark:hover:bg-slate-800 transition has-[:checked]:border-amber-600 dark:has-[:checked]:border-amber-500 has-[:checked]:bg-amber-50 dark:has-[:checked]:bg-amber-950/70 has-[:checked]:text-amber-900 dark:has-[:checked]:text-amber-200">
+              <input type="radio" name="activity-category" value="english" onchange="onCategoryChange('english')" class="hidden" />
+              <span class="text-amber-600 dark:text-amber-400"><i class="fa-solid fa-language"></i></span>
+              <span class="font-bold text-[11px]">Tiếng Anh</span>
+            </label>
+            <label class="cursor-pointer border border-slate-200 dark:border-slate-700 rounded-xl p-2 flex items-center space-x-2 hover:bg-slate-50 dark:hover:bg-slate-800 transition has-[:checked]:border-sky-600 dark:has-[:checked]:border-sky-500 has-[:checked]:bg-sky-50 dark:has-[:checked]:bg-sky-950/70 has-[:checked]:text-sky-900 dark:has-[:checked]:text-sky-200">
+              <input type="radio" name="activity-category" value="code" onchange="onCategoryChange('code')" class="hidden" />
+              <span class="text-sky-600 dark:text-sky-400"><i class="fa-solid fa-code"></i></span>
+              <span class="font-bold text-[11px]">Code</span>
+            </label>
+            <label class="cursor-pointer border border-slate-200 dark:border-slate-700 rounded-xl p-2 flex items-center space-x-2 hover:bg-slate-50 dark:hover:bg-slate-800 transition has-[:checked]:border-purple-600 dark:has-[:checked]:border-purple-500 has-[:checked]:bg-purple-50 dark:has-[:checked]:bg-purple-950/70 has-[:checked]:text-purple-900 dark:has-[:checked]:text-purple-200">
+              <input type="radio" name="activity-category" value="project" onchange="onCategoryChange('project')" class="hidden" />
+              <span class="text-purple-600 dark:text-purple-400"><i class="fa-solid fa-rocket"></i></span>
+              <span class="font-bold text-[11px]">Dự án</span>
+            </label>
+            <label class="cursor-pointer border border-slate-200 dark:border-slate-700 rounded-xl p-2 flex items-center space-x-2 hover:bg-slate-50 dark:hover:bg-slate-800 transition has-[:checked]:border-orange-600 dark:has-[:checked]:border-orange-500 has-[:checked]:bg-orange-50 dark:has-[:checked]:bg-orange-950/70 has-[:checked]:text-orange-900 dark:has-[:checked]:text-orange-200">
+              <input type="radio" name="activity-category" value="life" onchange="onCategoryChange('life')" class="hidden" />
+              <span class="text-orange-600 dark:text-orange-400"><i class="fa-solid fa-utensils"></i></span>
+              <span class="font-bold text-[11px]">Nấu ăn</span>
+            </label>
+            <label class="cursor-pointer border border-slate-200 dark:border-slate-700 rounded-xl p-2 flex items-center space-x-2 hover:bg-slate-50 dark:hover:bg-slate-800 transition has-[:checked]:border-rose-600 dark:has-[:checked]:border-rose-500 has-[:checked]:bg-rose-50 dark:has-[:checked]:bg-rose-950/70 has-[:checked]:text-rose-900 dark:has-[:checked]:text-rose-200">
+              <input type="radio" name="activity-category" value="leisure" onchange="onCategoryChange('leisure')" class="hidden" />
+              <span class="text-rose-600 dark:text-rose-400"><i class="fa-solid fa-gamepad"></i></span>
+              <span class="font-bold text-[11px]">Giải trí</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-4">
+          <div>
+            <label class="block font-semibold text-slate-700 dark:text-slate-300 mb-1">Mã định danh <span class="text-rose-500">*</span></label>
+            <input type="text" id="course-code" required placeholder="VD: INT3117 / ENG / RUN" class="w-full border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 dark:text-slate-100 rounded-xl px-3 py-2 text-xs focus:ring-2 focus:ring-indigo-500 focus:outline-none uppercase font-mono font-bold" />
+          </div>
+          <div>
+            <label class="block font-semibold text-slate-700 dark:text-slate-300 mb-1">Ghi chú / Nhóm mục tiêu</label>
+            <input type="text" id="course-class" placeholder="VD: 5km Cardio / Anki / Sprint" class="w-full border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 dark:text-slate-100 rounded-xl px-3 py-2 text-xs focus:ring-2 focus:ring-indigo-500 focus:outline-none" />
+          </div>
+        </div>
+
+        <div>
+          <label class="block font-semibold text-slate-700 dark:text-slate-300 mb-1">Tên hoạt động / Môn học <span class="text-rose-500">*</span></label>
+          <input type="text" id="course-name" required placeholder="VD: Chạy bộ sáng 5km & Giãn cơ" class="w-full border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 dark:text-slate-100 rounded-xl px-3 py-2 text-xs focus:ring-2 focus:ring-indigo-500 focus:outline-none font-medium" />
+        </div>
+
+        <div class="grid grid-cols-2 gap-4">
+          <div>
+            <label class="block font-semibold text-slate-700 dark:text-slate-300 mb-1">Thứ trong tuần <span class="text-rose-500">*</span></label>
+            <select id="course-weekday" class="w-full border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 dark:text-slate-100 rounded-xl px-3 py-2 text-xs focus:ring-2 focus:ring-indigo-500 focus:outline-none font-semibold">
+              <option value="0">Thứ 2 (Thứ Hai)</option>
+              <option value="1">Thứ 3 (Thứ Ba)</option>
+              <option value="2">Thứ 4 (Thứ Tư)</option>
+              <option value="3">Thứ 5 (Thứ Năm)</option>
+              <option value="4">Thứ 6 (Thứ Sáu)</option>
+              <option value="5">Thứ 7 (Thứ Bảy)</option>
+              <option value="6">Chủ nhật</option>
+            </select>
+          </div>
+          <div>
+            <label class="block font-semibold text-slate-700 dark:text-slate-300 mb-1">Địa điểm / Phòng học <span class="text-rose-500">*</span></label>
+            <input type="text" id="course-room" required placeholder="VD: 207-B hoặc Ở nhà" class="w-full border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 dark:text-slate-100 rounded-xl px-3 py-2 text-xs focus:ring-2 focus:ring-indigo-500 focus:outline-none font-medium" />
+          </div>
+        </div>
+
+        <!-- Exact Time Picker -->
+        <div class="p-3.5 bg-slate-50 dark:bg-slate-950/60 rounded-2xl border border-slate-200/90 dark:border-slate-800 space-y-2.5">
+          <div class="flex items-center justify-between">
+            <span class="font-bold text-slate-700 dark:text-slate-300 flex items-center">
+              <i class="fa-regular fa-clock text-indigo-600 dark:text-indigo-400 mr-1.5"></i> Khung thời gian thực hiện
+            </span>
+            <span id="duration-badge" class="text-[11px] font-bold text-indigo-700 dark:text-indigo-300 bg-indigo-50 dark:bg-indigo-950/80 px-2 py-0.5 rounded-lg border border-indigo-200 dark:border-indigo-800">
+              Thời lượng: 1h 00p
+            </span>
+          </div>
+
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label class="block text-slate-600 dark:text-slate-400 font-medium mb-1">Giờ bắt đầu</label>
+              <input type="time" id="course-start-time" required value="05:00" onchange="calculateDuration()" class="w-full border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 dark:text-slate-100 rounded-xl px-3 py-2 text-xs font-mono font-bold focus:ring-2 focus:ring-indigo-500 focus:outline-none" />
+            </div>
+            <div>
+              <label class="block text-slate-600 dark:text-slate-400 font-medium mb-1">Giờ kết thúc</label>
+              <input type="time" id="course-end-time" required value="06:00" onchange="calculateDuration()" class="w-full border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 dark:text-slate-100 rounded-xl px-3 py-2 text-xs font-mono font-bold focus:ring-2 focus:ring-indigo-500 focus:outline-none" />
+            </div>
+          </div>
+
+          <!-- Quick Duration Presets -->
+          <div class="flex items-center flex-wrap gap-1.5 pt-1">
+            <span class="text-[10px] text-slate-400 dark:text-slate-500 font-bold">Preset:</span>
+            <button type="button" onclick="setPresetDuration(60)" class="px-2 py-0.5 text-[10px] bg-white dark:bg-slate-800 hover:bg-indigo-50 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700 rounded-md text-slate-600 dark:text-slate-300 font-medium">60p (Chạy bộ 5h / English 13h30)</button>
+            <button type="button" onclick="setPresetDuration(45)" class="px-2 py-0.5 text-[10px] bg-white dark:bg-slate-800 hover:bg-indigo-50 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700 rounded-md text-slate-600 dark:text-slate-300 font-medium">45p (Ăn trưa 12h45)</button>
+            <button type="button" onclick="setPresetDuration(105)" class="px-2 py-0.5 text-[10px] bg-white dark:bg-slate-800 hover:bg-indigo-50 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700 rounded-md text-slate-600 dark:text-slate-300 font-medium">1h45 (Dự án tối 20h)</button>
+            <button type="button" onclick="setPresetDuration(150)" class="px-2 py-0.5 text-[10px] bg-white dark:bg-slate-800 hover:bg-indigo-50 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700 rounded-md text-slate-600 dark:text-slate-300 font-medium">2h30 (Project chiều)</button>
+            <button type="button" onclick="setPresetDuration(160)" class="px-2 py-0.5 text-[10px] bg-white dark:bg-slate-800 hover:bg-indigo-50 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700 rounded-md text-slate-600 dark:text-slate-300 font-medium">2h40 (3 tiết trường)</button>
+          </div>
+        </div>
+
+        <div class="pt-3 flex justify-end space-x-2 border-t border-slate-100 dark:border-slate-800">
+          <button type="button" onclick="closeModal()" class="px-4 py-2 rounded-xl text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 font-medium transition">
+            Hủy
+          </button>
+          <button type="submit" class="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold transition shadow-sm">
+            Lưu hoạt động
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: SYNC TO GOOGLE CALENDAR -->
+  <div id="sync-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-xs z-50 flex items-center justify-center hidden p-4 transition-all">
+    <div class="bg-white dark:bg-slate-900 rounded-2xl shadow-2xl border border-slate-200 dark:border-slate-800 max-w-md w-full overflow-hidden">
+      <div class="px-6 py-4 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between">
+        <h3 class="font-bold text-base text-slate-900 dark:text-white flex items-center space-x-2">
+          <i class="fa-brands fa-google text-emerald-600 dark:text-emerald-400"></i>
+          <span>Đẩy lên Google Calendar</span>
+        </h3>
+        <button onclick="closeSyncModal()" class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <div class="p-6 space-y-4 text-xs">
+        <div>
+          <label class="block font-semibold text-slate-700 dark:text-slate-300 mb-1">Tên lịch trên Google Calendar</label>
+          <input type="text" id="sync-calendar-name" value="TKB & Lịch Tự Học 2026-2027" placeholder="VD: primary hoặc Lịch Tự Học" class="w-full border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 dark:text-slate-100 rounded-xl px-3 py-2 text-xs focus:ring-2 focus:ring-emerald-500 focus:outline-none font-semibold" />
+          <p class="text-[11px] text-slate-400 dark:text-slate-500 mt-1">
+            * Nhập <code>primary</code> để thêm vào Lịch chính, hoặc nhập tên mới để tự tạo lịch riêng.
+          </p>
+        </div>
+
+        <div>
+          <label class="block font-semibold text-slate-700 dark:text-slate-300 mb-1">Lọc danh mục muốn đồng bộ</label>
+          <div class="grid grid-cols-2 gap-1.5 p-2.5 bg-slate-50 dark:bg-slate-950/60 rounded-xl border border-slate-200 dark:border-slate-800">
+            <label class="flex items-center space-x-1.5 cursor-pointer text-slate-700 dark:text-slate-300">
+              <input type="checkbox" name="sync-cat" value="university" checked class="rounded text-indigo-600" />
+              <span>🏫 Môn trường</span>
+            </label>
+            <label class="flex items-center space-x-1.5 cursor-pointer text-slate-700 dark:text-slate-300">
+              <input type="checkbox" name="sync-cat" value="healthy" checked class="rounded text-emerald-600" />
+              <span>🏃 Chạy bộ 05h</span>
+            </label>
+            <label class="flex items-center space-x-1.5 cursor-pointer text-slate-700 dark:text-slate-300">
+              <input type="checkbox" name="sync-cat" value="english" checked class="rounded text-amber-600" />
+              <span>🇬🇧 Tiếng Anh 13h30</span>
+            </label>
+            <label class="flex items-center space-x-1.5 cursor-pointer text-slate-700 dark:text-slate-300">
+              <input type="checkbox" name="sync-cat" value="code" checked class="rounded text-sky-600" />
+              <span>💻 Code</span>
+            </label>
+            <label class="flex items-center space-x-1.5 cursor-pointer text-slate-700 dark:text-slate-300">
+              <input type="checkbox" name="sync-cat" value="project" checked class="rounded text-purple-600" />
+              <span>🚀 Dự án 20h</span>
+            </label>
+            <label class="flex items-center space-x-1.5 cursor-pointer text-slate-700 dark:text-slate-300">
+              <input type="checkbox" name="sync-cat" value="life" checked class="rounded text-orange-600" />
+              <span>🍳 Nấu ăn</span>
+            </label>
+            <label class="flex items-center space-x-1.5 cursor-pointer text-slate-700 dark:text-slate-300">
+              <input type="checkbox" name="sync-cat" value="leisure" checked class="rounded text-rose-600" />
+              <span>🎮 Giải trí</span>
+            </label>
+          </div>
+        </div>
+
+        <div id="sync-log-container" class="hidden bg-slate-900 text-slate-200 p-3 rounded-xl max-h-48 overflow-y-auto font-mono text-[11px] space-y-1"></div>
+
+        <div class="pt-3 flex justify-end space-x-2 border-t border-slate-100 dark:border-slate-800">
+          <button type="button" onclick="closeSyncModal()" class="px-4 py-2 rounded-xl text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 font-medium transition">
+            Đóng
+          </button>
+          <button type="button" id="btn-start-sync" onclick="startSyncCalendar()" class="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold transition shadow-sm inline-flex items-center">
+            <i class="fa-solid fa-cloud-arrow-up mr-1.5"></i> Bắt đầu đồng bộ
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: CLEAN DUPLICATES -->
+  <div id="clean-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-xs z-50 flex items-center justify-center hidden p-4 transition-all">
+    <div class="bg-white dark:bg-slate-900 rounded-2xl shadow-2xl border border-slate-200 dark:border-slate-800 max-w-md w-full overflow-hidden">
+      <div class="px-6 py-4 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between">
+        <h3 class="font-bold text-base text-slate-900 dark:text-white flex items-center space-x-2">
+          <i class="fa-solid fa-broom text-rose-500"></i>
+          <span>Dọn dẹp lịch Google Calendar</span>
+        </h3>
+        <button onclick="closeCleanModal()" class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <div class="p-6 space-y-4 text-xs">
+        <div>
+          <label class="block font-semibold text-slate-700 dark:text-slate-300 mb-1">Tên lịch cần dọn dẹp</label>
+          <input type="text" id="clean-calendar-name" value="TKB & Lịch Tự Học 2026-2027" class="w-full border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 dark:text-slate-100 rounded-xl px-3 py-2 text-xs focus:ring-2 focus:ring-rose-500 focus:outline-none font-semibold" />
+        </div>
+
+        <div>
+          <label class="block font-semibold text-slate-700 dark:text-slate-300 mb-1">Chế độ dọn dẹp</label>
+          <div class="space-y-2">
+            <label class="flex items-center space-x-2 p-2.5 rounded-xl border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800 cursor-pointer">
+              <input type="radio" name="clean-mode" value="duplicates" checked class="text-rose-600 focus:ring-rose-500" />
+              <div>
+                <div class="font-semibold text-slate-800 dark:text-slate-200">Chỉ xóa bản trùng lặp (Giữ 1 bản)</div>
+                <div class="text-[11px] text-slate-500 dark:text-slate-400">Xóa các chuỗi môn/hoạt động bị bấm đẩy nhiều lần.</div>
+              </div>
+            </label>
+            <label class="flex items-center space-x-2 p-2.5 rounded-xl border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800 cursor-pointer">
+              <input type="radio" name="clean-mode" value="all" class="text-rose-600 focus:ring-rose-500" />
+              <div>
+                <div class="font-semibold text-rose-700 dark:text-rose-400">Xóa sạch toàn bộ sự kiện đã tạo</div>
+                <div class="text-[11px] text-slate-500 dark:text-slate-400">Xóa sạch để làm mới hoàn toàn.</div>
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <div id="clean-log-container" class="hidden bg-slate-900 text-slate-200 p-3 rounded-xl max-h-48 overflow-y-auto font-mono text-[11px] space-y-1"></div>
+
+        <div class="pt-3 flex justify-end space-x-2 border-t border-slate-100 dark:border-slate-800">
+          <button type="button" onclick="closeCleanModal()" class="px-4 py-2 rounded-xl text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 font-medium transition">
+            Đóng
+          </button>
+          <button type="button" id="btn-start-clean" onclick="startCleanCalendar()" class="px-4 py-2 rounded-xl bg-rose-600 hover:bg-rose-700 text-white font-bold transition shadow-sm inline-flex items-center">
+            <i class="fa-solid fa-trash-can mr-1.5"></i> Tiến hành dọn dẹp
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col space-y-2"></div>
+
+  <!-- TypeScript Module Script -->
+  <script type="module" src="/src/main.ts"></script>
+</body>
+</html>

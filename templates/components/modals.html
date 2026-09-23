@@ -1,0 +1,265 @@
+<!-- MODAL: ADD / EDIT ACTIVITY -->
+<div id="course-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-xs z-50 flex items-center justify-center hidden p-4 transition-all">
+  <div class="bg-white dark:bg-slate-900 rounded-2xl shadow-2xl border border-slate-200 dark:border-slate-800 max-w-lg w-full overflow-hidden animate-in fade-in zoom-in-95 duration-150">
+    <div class="px-6 py-4 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between">
+      <h3 id="modal-title" class="font-bold text-base text-slate-900 dark:text-white flex items-center space-x-2">
+        <i class="fa-solid fa-calendar-plus text-indigo-600 dark:text-indigo-400"></i>
+        <span>Thêm hoạt động mới</span>
+      </h3>
+      <button onclick="closeModal()" class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition text-lg">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+
+    <form id="course-form" onsubmit="saveCourse(event)" class="p-6 space-y-4 text-xs">
+      <input type="hidden" id="edit-index" value="-1" />
+
+      <!-- Category Picker -->
+      <div>
+        <label class="block font-semibold text-slate-700 dark:text-slate-300 mb-1">Phân loại hoạt động <span class="text-rose-500">*</span></label>
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2" id="category-selector-group">
+          <label class="cursor-pointer border border-slate-200 dark:border-slate-700 rounded-xl p-2 flex items-center space-x-2 hover:bg-slate-50 dark:hover:bg-slate-800 transition has-[:checked]:border-indigo-600 dark:has-[:checked]:border-indigo-500 has-[:checked]:bg-indigo-50 dark:has-[:checked]:bg-indigo-950/70 has-[:checked]:text-indigo-900 dark:has-[:checked]:text-indigo-200">
+            <input type="radio" name="activity-category" value="university" onchange="onCategoryChange('university')" class="hidden" checked />
+            <span class="text-indigo-600 dark:text-indigo-400"><i class="fa-solid fa-graduation-cap"></i></span>
+            <span class="font-bold text-[11px]">Trường</span>
+          </label>
+          <label class="cursor-pointer border border-slate-200 dark:border-slate-700 rounded-xl p-2 flex items-center space-x-2 hover:bg-slate-50 dark:hover:bg-slate-800 transition has-[:checked]:border-emerald-600 dark:has-[:checked]:border-emerald-500 has-[:checked]:bg-emerald-50 dark:has-[:checked]:bg-emerald-950/70 has-[:checked]:text-emerald-900 dark:has-[:checked]:text-emerald-200">
+            <input type="radio" name="activity-category" value="healthy" onchange="onCategoryChange('healthy')" class="hidden" />
+            <span class="text-emerald-600 dark:text-emerald-400"><i class="fa-solid fa-person-running"></i></span>
+            <span class="font-bold text-[11px]">Chạy bộ</span>
+          </label>
+          <label class="cursor-pointer border border-slate-200 dark:border-slate-700 rounded-xl p-2 flex items-center space-x-2 hover:bg-slate-50 dark:hover:bg-slate-800 transition has-[:checked]:border-amber-600 dark:has-[:checked]:border-amber-500 has-[:checked]:bg-amber-50 dark:has-[:checked]:bg-amber-950/70 has-[:checked]:text-amber-900 dark:has-[:checked]:text-amber-200">
+            <input type="radio" name="activity-category" value="english" onchange="onCategoryChange('english')" class="hidden" />
+            <span class="text-amber-600 dark:text-amber-400"><i class="fa-solid fa-language"></i></span>
+            <span class="font-bold text-[11px]">Tiếng Anh</span>
+          </label>
+          <label class="cursor-pointer border border-slate-200 dark:border-slate-700 rounded-xl p-2 flex items-center space-x-2 hover:bg-slate-50 dark:hover:bg-slate-800 transition has-[:checked]:border-sky-600 dark:has-[:checked]:border-sky-500 has-[:checked]:bg-sky-50 dark:has-[:checked]:bg-sky-950/70 has-[:checked]:text-sky-900 dark:has-[:checked]:text-sky-200">
+            <input type="radio" name="activity-category" value="code" onchange="onCategoryChange('code')" class="hidden" />
+            <span class="text-sky-600 dark:text-sky-400"><i class="fa-solid fa-code"></i></span>
+            <span class="font-bold text-[11px]">Code</span>
+          </label>
+          <label class="cursor-pointer border border-slate-200 dark:border-slate-700 rounded-xl p-2 flex items-center space-x-2 hover:bg-slate-50 dark:hover:bg-slate-800 transition has-[:checked]:border-purple-600 dark:has-[:checked]:border-purple-500 has-[:checked]:bg-purple-50 dark:has-[:checked]:bg-purple-950/70 has-[:checked]:text-purple-900 dark:has-[:checked]:text-purple-200">
+            <input type="radio" name="activity-category" value="project" onchange="onCategoryChange('project')" class="hidden" />
+            <span class="text-purple-600 dark:text-purple-400"><i class="fa-solid fa-rocket"></i></span>
+            <span class="font-bold text-[11px]">Dự án</span>
+          </label>
+          <label class="cursor-pointer border border-slate-200 dark:border-slate-700 rounded-xl p-2 flex items-center space-x-2 hover:bg-slate-50 dark:hover:bg-slate-800 transition has-[:checked]:border-orange-600 dark:has-[:checked]:border-orange-500 has-[:checked]:bg-orange-50 dark:has-[:checked]:bg-orange-950/70 has-[:checked]:text-orange-900 dark:has-[:checked]:text-orange-200">
+            <input type="radio" name="activity-category" value="life" onchange="onCategoryChange('life')" class="hidden" />
+            <span class="text-orange-600 dark:text-orange-400"><i class="fa-solid fa-utensils"></i></span>
+            <span class="font-bold text-[11px]">Nấu ăn</span>
+          </label>
+          <label class="cursor-pointer border border-slate-200 dark:border-slate-700 rounded-xl p-2 flex items-center space-x-2 hover:bg-slate-50 dark:hover:bg-slate-800 transition has-[:checked]:border-rose-600 dark:has-[:checked]:border-rose-500 has-[:checked]:bg-rose-50 dark:has-[:checked]:bg-rose-950/70 has-[:checked]:text-rose-900 dark:has-[:checked]:text-rose-200">
+            <input type="radio" name="activity-category" value="leisure" onchange="onCategoryChange('leisure')" class="hidden" />
+            <span class="text-rose-600 dark:text-rose-400"><i class="fa-solid fa-gamepad"></i></span>
+            <span class="font-bold text-[11px]">Giải trí</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-2 gap-4">
+        <div>
+          <label class="block font-semibold text-slate-700 dark:text-slate-300 mb-1">Mã định danh <span class="text-rose-500">*</span></label>
+          <input type="text" id="course-code" required placeholder="VD: INT3117 / ENG / RUN" class="w-full border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 dark:text-slate-100 rounded-xl px-3 py-2 text-xs focus:ring-2 focus:ring-indigo-500 focus:outline-none uppercase font-mono font-bold" />
+        </div>
+        <div>
+          <label class="block font-semibold text-slate-700 dark:text-slate-300 mb-1">Ghi chú / Nhóm mục tiêu</label>
+          <input type="text" id="course-class" placeholder="VD: 5km Cardio / Anki / Sprint" class="w-full border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 dark:text-slate-100 rounded-xl px-3 py-2 text-xs focus:ring-2 focus:ring-indigo-500 focus:outline-none" />
+        </div>
+      </div>
+
+      <div>
+        <label class="block font-semibold text-slate-700 dark:text-slate-300 mb-1">Tên hoạt động / Môn học <span class="text-rose-500">*</span></label>
+        <input type="text" id="course-name" required placeholder="VD: Chạy bộ sáng 5km & Giãn cơ" class="w-full border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 dark:text-slate-100 rounded-xl px-3 py-2 text-xs focus:ring-2 focus:ring-indigo-500 focus:outline-none font-medium" />
+      </div>
+
+      <div class="grid grid-cols-2 gap-4">
+        <div>
+          <label class="block font-semibold text-slate-700 dark:text-slate-300 mb-1">Thứ trong tuần <span class="text-rose-500">*</span></label>
+          <select id="course-weekday" class="w-full border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 dark:text-slate-100 rounded-xl px-3 py-2 text-xs focus:ring-2 focus:ring-indigo-500 focus:outline-none font-semibold">
+            <option value="0">Thứ 2 (Thứ Hai)</option>
+            <option value="1">Thứ 3 (Thứ Ba)</option>
+            <option value="2">Thứ 4 (Thứ Tư)</option>
+            <option value="3">Thứ 5 (Thứ Năm)</option>
+            <option value="4">Thứ 6 (Thứ Sáu)</option>
+            <option value="5">Thứ 7 (Thứ Bảy)</option>
+            <option value="6">Chủ nhật</option>
+          </select>
+        </div>
+        <div>
+          <label class="block font-semibold text-slate-700 dark:text-slate-300 mb-1">Địa điểm / Phòng học <span class="text-rose-500">*</span></label>
+          <input type="text" id="course-room" required placeholder="VD: 207-B hoặc Ở nhà" class="w-full border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 dark:text-slate-100 rounded-xl px-3 py-2 text-xs focus:ring-2 focus:ring-indigo-500 focus:outline-none font-medium" />
+        </div>
+      </div>
+
+      <!-- Exact Time Picker -->
+      <div class="p-3.5 bg-slate-50 dark:bg-slate-950/60 rounded-2xl border border-slate-200/90 dark:border-slate-800 space-y-2.5">
+        <div class="flex items-center justify-between">
+          <span class="font-bold text-slate-700 dark:text-slate-300 flex items-center">
+            <i class="fa-regular fa-clock text-indigo-600 dark:text-indigo-400 mr-1.5"></i> Khung thời gian thực hiện
+          </span>
+          <span id="duration-badge" class="text-[11px] font-bold text-indigo-700 dark:text-indigo-300 bg-indigo-50 dark:bg-indigo-950/80 px-2 py-0.5 rounded-lg border border-indigo-200 dark:border-indigo-800">
+            Thời lượng: 1h 00p
+          </span>
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-slate-600 dark:text-slate-400 font-medium mb-1">Giờ bắt đầu</label>
+            <input type="time" id="course-start-time" required value="05:00" onchange="calculateDuration()" class="w-full border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 dark:text-slate-100 rounded-xl px-3 py-2 text-xs font-mono font-bold focus:ring-2 focus:ring-indigo-500 focus:outline-none" />
+          </div>
+          <div>
+            <label class="block text-slate-600 dark:text-slate-400 font-medium mb-1">Giờ kết thúc</label>
+            <input type="time" id="course-end-time" required value="06:00" onchange="calculateDuration()" class="w-full border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 dark:text-slate-100 rounded-xl px-3 py-2 text-xs font-mono font-bold focus:ring-2 focus:ring-indigo-500 focus:outline-none" />
+          </div>
+        </div>
+
+        <!-- Quick Duration Presets -->
+        <div class="flex items-center flex-wrap gap-1.5 pt-1">
+          <span class="text-[10px] text-slate-400 dark:text-slate-500 font-bold">Preset:</span>
+          <button type="button" onclick="setPresetDuration(60)" class="px-2 py-0.5 text-[10px] bg-white dark:bg-slate-800 hover:bg-indigo-50 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700 rounded-md text-slate-600 dark:text-slate-300 font-medium">60p (Chạy bộ 5h / English 13h30)</button>
+          <button type="button" onclick="setPresetDuration(45)" class="px-2 py-0.5 text-[10px] bg-white dark:bg-slate-800 hover:bg-indigo-50 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700 rounded-md text-slate-600 dark:text-slate-300 font-medium">45p (Ăn trưa 12h45)</button>
+          <button type="button" onclick="setPresetDuration(105)" class="px-2 py-0.5 text-[10px] bg-white dark:bg-slate-800 hover:bg-indigo-50 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700 rounded-md text-slate-600 dark:text-slate-300 font-medium">1h45 (Dự án tối 20h)</button>
+          <button type="button" onclick="setPresetDuration(150)" class="px-2 py-0.5 text-[10px] bg-white dark:bg-slate-800 hover:bg-indigo-50 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700 rounded-md text-slate-600 dark:text-slate-300 font-medium">2h30 (Project chiều)</button>
+          <button type="button" onclick="setPresetDuration(160)" class="px-2 py-0.5 text-[10px] bg-white dark:bg-slate-800 hover:bg-indigo-50 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700 rounded-md text-slate-600 dark:text-slate-300 font-medium">2h40 (3 tiết trường)</button>
+        </div>
+      </div>
+
+      <div class="pt-3 flex justify-end space-x-2 border-t border-slate-100 dark:border-slate-800">
+        <button type="button" onclick="closeModal()" class="px-4 py-2 rounded-xl text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 font-medium transition">
+          Hủy
+        </button>
+        <button type="submit" class="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold transition shadow-sm">
+          Lưu hoạt động
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- MODAL: SYNC TO GOOGLE CALENDAR -->
+<div id="sync-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-xs z-50 flex items-center justify-center hidden p-4 transition-all">
+  <div class="bg-white dark:bg-slate-900 rounded-2xl shadow-2xl border border-slate-200 dark:border-slate-800 max-w-md w-full overflow-hidden">
+    <div class="px-6 py-4 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between">
+      <h3 class="font-bold text-base text-slate-900 dark:text-white flex items-center space-x-2">
+        <i class="fa-brands fa-google text-emerald-600 dark:text-emerald-400"></i>
+        <span>Đẩy lên Google Calendar</span>
+      </h3>
+      <button onclick="closeSyncModal()" class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+
+    <div class="p-6 space-y-4 text-xs">
+      <div>
+        <label class="block font-semibold text-slate-700 dark:text-slate-300 mb-1">Tên lịch trên Google Calendar</label>
+        <input type="text" id="sync-calendar-name" value="TKB & Lịch Tự Học 2026-2027" placeholder="VD: primary hoặc Lịch Tự Học" class="w-full border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 dark:text-slate-100 rounded-xl px-3 py-2 text-xs focus:ring-2 focus:ring-emerald-500 focus:outline-none font-semibold" />
+        <p class="text-[11px] text-slate-400 dark:text-slate-500 mt-1">
+          * Nhập <code>primary</code> để thêm vào Lịch chính, hoặc nhập tên mới để script tự tạo lịch riêng.
+        </p>
+      </div>
+
+      <div>
+        <label class="block font-semibold text-slate-700 dark:text-slate-300 mb-1">Lọc danh mục muốn đồng bộ</label>
+        <div class="grid grid-cols-2 gap-1.5 p-2.5 bg-slate-50 dark:bg-slate-950/60 rounded-xl border border-slate-200 dark:border-slate-800">
+          <label class="flex items-center space-x-1.5 cursor-pointer text-slate-700 dark:text-slate-300">
+            <input type="checkbox" name="sync-cat" value="university" checked class="rounded text-indigo-600" />
+            <span>🏫 Môn trường</span>
+          </label>
+          <label class="flex items-center space-x-1.5 cursor-pointer text-slate-700 dark:text-slate-300">
+            <input type="checkbox" name="sync-cat" value="healthy" checked class="rounded text-emerald-600" />
+            <span>🏃 Chạy bộ 05h</span>
+          </label>
+          <label class="flex items-center space-x-1.5 cursor-pointer text-slate-700 dark:text-slate-300">
+            <input type="checkbox" name="sync-cat" value="english" checked class="rounded text-amber-600" />
+            <span>🇬🇧 Tiếng Anh 13h30</span>
+          </label>
+          <label class="flex items-center space-x-1.5 cursor-pointer text-slate-700 dark:text-slate-300">
+            <input type="checkbox" name="sync-cat" value="code" checked class="rounded text-sky-600" />
+            <span>💻 Code</span>
+          </label>
+          <label class="flex items-center space-x-1.5 cursor-pointer text-slate-700 dark:text-slate-300">
+            <input type="checkbox" name="sync-cat" value="project" checked class="rounded text-purple-600" />
+            <span>🚀 Dự án 20h</span>
+          </label>
+          <label class="flex items-center space-x-1.5 cursor-pointer text-slate-700 dark:text-slate-300">
+            <input type="checkbox" name="sync-cat" value="life" checked class="rounded text-orange-600" />
+            <span>🍳 Nấu ăn</span>
+          </label>
+          <label class="flex items-center space-x-1.5 cursor-pointer text-slate-700 dark:text-slate-300">
+            <input type="checkbox" name="sync-cat" value="leisure" checked class="rounded text-rose-600" />
+            <span>🎮 Giải trí</span>
+          </label>
+        </div>
+      </div>
+
+      <div id="sync-log-container" class="hidden bg-slate-900 text-slate-200 p-3 rounded-xl max-h-48 overflow-y-auto font-mono text-[11px] space-y-1">
+      </div>
+
+      <div class="pt-3 flex justify-end space-x-2 border-t border-slate-100 dark:border-slate-800">
+        <button type="button" onclick="closeSyncModal()" class="px-4 py-2 rounded-xl text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 font-medium transition">
+          Đóng
+        </button>
+        <button type="button" id="btn-start-sync" onclick="startSyncCalendar()" class="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold transition shadow-sm inline-flex items-center">
+          <i class="fa-solid fa-cloud-arrow-up mr-1.5"></i> Bắt đầu đồng bộ
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: CLEAN DUPLICATES -->
+<div id="clean-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-xs z-50 flex items-center justify-center hidden p-4 transition-all">
+  <div class="bg-white dark:bg-slate-900 rounded-2xl shadow-2xl border border-slate-200 dark:border-slate-800 max-w-md w-full overflow-hidden">
+    <div class="px-6 py-4 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between">
+      <h3 class="font-bold text-base text-slate-900 dark:text-white flex items-center space-x-2">
+        <i class="fa-solid fa-broom text-rose-500"></i>
+        <span>Dọn dẹp lịch Google Calendar</span>
+      </h3>
+      <button onclick="closeCleanModal()" class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+
+    <div class="p-6 space-y-4 text-xs">
+      <div>
+        <label class="block font-semibold text-slate-700 dark:text-slate-300 mb-1">Tên lịch cần dọn dẹp</label>
+        <input type="text" id="clean-calendar-name" value="TKB & Lịch Tự Học 2026-2027" class="w-full border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 dark:text-slate-100 rounded-xl px-3 py-2 text-xs focus:ring-2 focus:ring-rose-500 focus:outline-none font-semibold" />
+      </div>
+
+      <div>
+        <label class="block font-semibold text-slate-700 dark:text-slate-300 mb-1">Chế độ dọn dẹp</label>
+        <div class="space-y-2">
+          <label class="flex items-center space-x-2 p-2.5 rounded-xl border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800 cursor-pointer">
+            <input type="radio" name="clean-mode" value="duplicates" checked class="text-rose-600 focus:ring-rose-500" />
+            <div>
+              <div class="font-semibold text-slate-800 dark:text-slate-200">Chỉ xóa bản trùng lặp (Giữ 1 bản)</div>
+              <div class="text-[11px] text-slate-500 dark:text-slate-400">Xóa các chuỗi môn/hoạt động bị bấm đẩy nhiều lần.</div>
+            </div>
+          </label>
+          <label class="flex items-center space-x-2 p-2.5 rounded-xl border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800 cursor-pointer">
+            <input type="radio" name="clean-mode" value="all" class="text-rose-600 focus:ring-rose-500" />
+            <div>
+              <div class="font-semibold text-rose-700 dark:text-rose-400">Xóa sạch toàn bộ sự kiện đã tạo</div>
+              <div class="text-[11px] text-slate-500 dark:text-slate-400">Xóa sạch để làm mới hoàn toàn.</div>
+            </div>
+          </label>
+        </div>
+      </div>
+
+      <div id="clean-log-container" class="hidden bg-slate-900 text-slate-200 p-3 rounded-xl max-h-48 overflow-y-auto font-mono text-[11px] space-y-1">
+      </div>
+
+      <div class="pt-3 flex justify-end space-x-2 border-t border-slate-100 dark:border-slate-800">
+        <button type="button" onclick="closeCleanModal()" class="px-4 py-2 rounded-xl text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 font-medium transition">
+          Đóng
+        </button>
+        <button type="button" id="btn-start-clean" onclick="startCleanCalendar()" class="px-4 py-2 rounded-xl bg-rose-600 hover:bg-rose-700 text-white font-bold transition shadow-sm inline-flex items-center">
+          <i class="fa-solid fa-trash-can mr-1.5"></i> Tiến hành dọn dẹp
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Toast Notification Container -->
+<div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col space-y-2"></div>
