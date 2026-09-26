@@ -22,7 +22,7 @@
   {
     "code": "ENG",
     "name": "TA Sáng: Anki Glossary",
-    "class": "Anki Vocab (06:20-07:05)",
+    "class": "Anki Vocab (06:15-07:00)",
     "room": "Ở nhà",
     "category": "english",
     "weekday": 0,
@@ -31,23 +31,33 @@
   },
   {
     "code": "CODE",
-    "name": "Ôn Kiểm thử PM (1/2)",
-    "class": "Đọc slide & Soạn test case",
+    "name": "Chuẩn bị: Kiểm thử PM (45p)",
+    "class": "Đọc slide & xem trước test case (45p)",
     "room": "Ở nhà",
     "category": "code",
     "weekday": 0,
     "start_time": "07:00:00",
-    "end_time": "08:00:00"
+    "end_time": "07:45:00"
+  },
+  {
+    "code": "CODE",
+    "name": "Luyện code & Soạn test case thực hành",
+    "class": "Hands-on testing practice",
+    "room": "Ở nhà",
+    "category": "code",
+    "weekday": 0,
+    "start_time": "07:45:00",
+    "end_time": "08:30:00"
   },
   {
     "code": "MEAL",
-    "name": "Nấu cơm & Ăn trưa tại nhà",
-    "class": "Chuẩn bị sẵn trước khi đi học",
+    "name": "Nấu cơm mang theo & Chuẩn bị đồ đi học",
+    "class": "Chuẩn bị cơm trưa & đồ dùng",
     "room": "Bếp nhà",
     "category": "life",
     "weekday": 0,
-    "start_time": "08:00:00",
-    "end_time": "09:00:00"
+    "start_time": "08:30:00",
+    "end_time": "09:15:00"
   },
   {
     "code": "MEAL",
@@ -71,17 +81,17 @@
   },
   {
     "code": "REST",
-    "name": "Ở lại trường: Nghỉ trưa tại Thư viện / Tự học",
-    "class": "Nghỉ ngơi thư giãn",
+    "name": "Nghỉ trưa TV (Thư viện trường) & Ăn trưa",
+    "class": "Nghỉ ngơi & Ăn trưa thư viện",
     "room": "Thư viện trường",
-    "category": "leisure",
+    "category": "life",
     "weekday": 0,
     "start_time": "12:40:00",
     "end_time": "13:15:00"
   },
   {
     "code": "ENG",
-    "name": "TA Trưa (Học tại thư viện): Watch & Listen",
+    "name": "TA Trưa: Watch & Listen (Thư viện)",
     "class": "Video + Main/Detail",
     "room": "Thư viện trường",
     "category": "english",
@@ -91,13 +101,23 @@
   },
   {
     "code": "CODE",
-    "name": "Ôn Quản lý DA (1/2)",
-    "class": "Đọc slide tại thư viện (14:45-15:45)",
+    "name": "Chuẩn bị: Quản lý DA (45p)",
+    "class": "Đọc slide tại TV (14:45-15:30)",
     "room": "Thư viện trường",
     "category": "code",
     "weekday": 0,
     "start_time": "14:45:00",
-    "end_time": "15:45:00"
+    "end_time": "15:30:00"
+  },
+  {
+    "code": "REST",
+    "name": "Thư giãn & Chuẩn bị vào ca học",
+    "class": "Giải lao tại thư viện (30p)",
+    "room": "Thư viện trường",
+    "category": "leisure",
+    "weekday": 0,
+    "start_time": "15:30:00",
+    "end_time": "16:00:00"
   },
   {
     "code": "INT3111",
@@ -121,23 +141,33 @@
   },
   {
     "code": "MEAL",
-    "name": "Ăn tối & Thư giãn",
-    "class": "Bữa tối (19:10-20:00)",
+    "name": "Nấu & Ăn tối tại nhà",
+    "class": "Bữa tối",
     "room": "Bếp nhà",
     "category": "life",
     "weekday": 0,
     "start_time": "19:10:00",
-    "end_time": "20:00:00"
+    "end_time": "19:45:00"
   },
   {
     "code": "CODE",
-    "name": "Ôn Kiểm thử PM (2/2)",
-    "class": "Viết code Unit Test (20:00-21:00)",
+    "name": "Ôn lại: Kiểm thử PM (45p)",
+    "class": "Viết Unit Test & xem lại bài trên lớp (45p)",
     "room": "Ở nhà",
     "category": "code",
     "weekday": 0,
-    "start_time": "20:00:00",
-    "end_time": "21:00:00"
+    "start_time": "19:45:00",
+    "end_time": "20:30:00"
+  },
+  {
+    "code": "CODE",
+    "name": "Chuẩn bị: Lập trình Mạng (45p)",
+    "class": "Đọc slide & lý thuyết Socket TCP/UDP (45p)",
+    "room": "Ở nhà",
+    "category": "code",
+    "weekday": 0,
+    "start_time": "20:30:00",
+    "end_time": "21:15:00"
   },
   {
     "code": "ENG",
@@ -151,7 +181,7 @@
   },
   {
     "code": "REST",
-    "name": "Giải trí & Đọc sách đêm",
+    "name": "Đọc sách / Relax & Chuẩn bị ngủ",
     "class": "Unwind & Sleep Prep",
     "room": "Phòng ngủ",
     "category": "leisure",
@@ -201,38 +231,48 @@
   },
   {
     "code": "MEAL",
-    "name": "Tan học & Về nhà (30p)",
-    "class": "Di chuyển xe máy (09:40-10:10)",
+    "name": "Tan học & Về nhà (35p)",
+    "class": "Di chuyển xe máy",
     "room": "Đường về nhà",
     "category": "life",
     "weekday": 1,
     "start_time": "09:40:00",
-    "end_time": "10:10:00"
+    "end_time": "10:15:00"
   },
   {
     "code": "CODE",
-    "name": "Ôn & Code Lab Mạng (2h)",
-    "class": "Socket/TCP, Client-Server (10:15-12:15)",
+    "name": "Ôn lại: Lập trình Mạng (45p)",
+    "class": "Review slide & kiến thức vừa học (45p)",
     "room": "Ở nhà",
     "category": "code",
     "weekday": 1,
     "start_time": "10:15:00",
-    "end_time": "12:15:00"
+    "end_time": "11:00:00"
+  },
+  {
+    "code": "CODE",
+    "name": "Thực hành Code Lab Mạng (Socket TCP/UDP)",
+    "class": "Code Client-Server Socket Lab",
+    "room": "Ở nhà",
+    "category": "code",
+    "weekday": 1,
+    "start_time": "11:00:00",
+    "end_time": "12:40:00"
   },
   {
     "code": "MEAL",
-    "name": "Nấu cơm, Ăn trưa & Nghỉ ngơi",
+    "name": "Ăn trưa & Nghỉ 20p",
     "class": "Bữa trưa & Nghỉ ngơi",
     "room": "Bếp nhà",
     "category": "life",
     "weekday": 1,
-    "start_time": "12:15:00",
+    "start_time": "12:40:00",
     "end_time": "13:15:00"
   },
   {
     "code": "ENG",
-    "name": "TA Trưa: Reading 1 (Key Vocab & Đọc hiểu)",
-    "class": "Reading comprehension",
+    "name": "TA Trưa: Reading 1",
+    "class": "Key Vocab & Đọc hiểu",
     "room": "Ở nhà",
     "category": "english",
     "weekday": 1,
@@ -241,8 +281,8 @@
   },
   {
     "code": "PROJ",
-    "name": "Dự án cá nhân (Sprint Feature)",
-    "class": "Deep Work Sprint",
+    "name": "DA cá nhân: Sprint Feature",
+    "class": "Deep Work Sprint Feature",
     "room": "Ở nhà",
     "category": "project",
     "weekday": 1,
@@ -270,19 +310,29 @@
     "end_time": "19:00:00"
   },
   {
+    "code": "CODE",
+    "name": "Ôn lại: Quản lý DA (45p)",
+    "class": "Review slide & phân công task BTL (45p)",
+    "room": "Ở nhà",
+    "category": "code",
+    "weekday": 1,
+    "start_time": "19:00:00",
+    "end_time": "19:45:00"
+  },
+  {
     "code": "PROJ",
-    "name": "Dự án cá nhân (Code Feature)",
-    "class": "Code Backend & Feature",
+    "name": "Code BTL Nhóm / Dự án cá nhân",
+    "class": "Thực hiện task đồ án & BTL",
     "room": "Ở nhà",
     "category": "project",
     "weekday": 1,
-    "start_time": "19:00:00",
+    "start_time": "19:45:00",
     "end_time": "21:15:00"
   },
   {
     "code": "ENG",
-    "name": "TA Tối: Kỹ năng đọc Scanning",
-    "class": "Reading Scanning (45p)",
+    "name": "TA Tối: Scanning",
+    "class": "Reading Scanning Skills (45p)",
     "room": "Ở nhà",
     "category": "english",
     "weekday": 1,
@@ -291,8 +341,8 @@
   },
   {
     "code": "REST",
-    "name": "Giải trí: Chơi Game / Relax",
-    "class": "Gaming & Relax",
+    "name": "Gaming & Relax",
+    "class": "Giải trí & Thư giãn",
     "room": "Ở nhà",
     "category": "leisure",
     "weekday": 1,
@@ -321,8 +371,8 @@
   },
   {
     "code": "ENG",
-    "name": "TA Sáng: Anki Vocab R2",
-    "class": "Anki Flashcards",
+    "name": "TA Sáng: Anki Vocab",
+    "class": "Anki Flashcards Vocab",
     "room": "Ở nhà",
     "category": "english",
     "weekday": 2,
@@ -331,48 +381,68 @@
   },
   {
     "code": "CODE",
-    "name": "Bài tập lớn các môn (Assignment / Project)",
-    "class": "Assignment & Project Labs",
+    "name": "Ôn lại: Lập trình Mạng (45p)",
+    "class": "Socket Lab & TCP/IP protocols (45p)",
     "room": "Ở nhà",
     "category": "code",
     "weekday": 2,
     "start_time": "07:00:00",
-    "end_time": "09:45:00"
+    "end_time": "07:45:00"
   },
   {
     "code": "CODE",
-    "name": "Ôn CSDL (2/2)",
-    "class": "SQL nâng cao, Trigger & Index (09:45-10:45)",
+    "name": "Ôn lại: Kiểm thử PM (45p)",
+    "class": "Soạn test case & Unit test (45p)",
     "room": "Ở nhà",
     "category": "code",
     "weekday": 2,
-    "start_time": "09:45:00",
+    "start_time": "07:45:00",
+    "end_time": "08:30:00"
+  },
+  {
+    "code": "CODE",
+    "name": "Bài tập lớn các môn (Assignment / Lab)",
+    "class": "Assignment & Project Labs môn học",
+    "room": "Ở nhà",
+    "category": "code",
+    "weekday": 2,
+    "start_time": "08:30:00",
+    "end_time": "09:40:00"
+  },
+  {
+    "code": "CODE",
+    "name": "Chuẩn bị: Thu thập YC PM (45p)",
+    "class": "Đọc SRS & User Story (45p)",
+    "room": "Ở nhà",
+    "category": "code",
+    "weekday": 2,
+    "start_time": "10:00:00",
     "end_time": "10:45:00"
   },
   {
     "code": "CODE",
-    "name": "Ôn Quản lý DA (2/2)",
-    "class": "Báo cáo, họp nhóm & task đồ án (10:45-11:45)",
+    "name": "Ôn lại: Hệ QT CSDL (45p)",
+    "class": "SQL nâng cao, Trigger & Index (45p)",
     "room": "Ở nhà",
     "category": "code",
     "weekday": 2,
     "start_time": "10:45:00",
-    "end_time": "11:45:00"
+    "end_time": "11:30:00"
   },
   {
     "code": "CODE",
-    "name": "Hoàn thiện bài tập lớn & Tổng kết",
-    "class": "Wrap-up & chuẩn bị nghỉ trưa",
+    "name": "Thực hành Assignment & Hệ thống",
+    "class": "Hands-on DB & Assignment practice",
     "room": "Ở nhà",
     "category": "code",
     "weekday": 2,
-    "start_time": "11:45:00",
+    "start_time": "11:30:00",
     "end_time": "12:40:00"
   },
   {
     "code": "MEAL",
     "name": "Ăn trưa & Nghỉ 20p",
-    "class": "Bữa trưa",
+    "class": "Bữa trưa & Nghỉ ngơi",
     "room": "Bếp nhà",
     "category": "life",
     "weekday": 2,
@@ -381,8 +451,8 @@
   },
   {
     "code": "ENG",
-    "name": "TA Trưa: Reading 2 (Phân tích & Inferences)",
-    "class": "Deep Analysis Reading",
+    "name": "TA Trưa: Reading 2",
+    "class": "Phân tích sâu & Inferences",
     "room": "Ở nhà",
     "category": "english",
     "weekday": 2,
@@ -391,8 +461,8 @@
   },
   {
     "code": "PROJ",
-    "name": "Dự án cá nhân (Architecture/DB)",
-    "class": "System Architecture",
+    "name": "DA cá nhân: Architecture",
+    "class": "System Architecture & Thiết kế DB",
     "room": "Ở nhà",
     "category": "project",
     "weekday": 2,
@@ -421,8 +491,8 @@
   },
   {
     "code": "PROJ",
-    "name": "Dự án cá nhân (Code Backend/DB)",
-    "class": "Backend Implementation",
+    "name": "DA cá nhân: API / Backend",
+    "class": "Backend Implementation & Xây dựng API",
     "room": "Ở nhà",
     "category": "project",
     "weekday": 2,
@@ -431,7 +501,7 @@
   },
   {
     "code": "ENG",
-    "name": "TA Tối: Synthesizing Ideas",
+    "name": "TA Tối: Synthesis",
     "class": "Idea Synthesis (45p)",
     "room": "Ở nhà",
     "category": "english",
@@ -441,8 +511,8 @@
   },
   {
     "code": "REST",
-    "name": "Giải trí: Xem phim / Relax",
-    "class": "Movie Night",
+    "name": "Xem phim & Relax",
+    "class": "Movie Night & Thư giãn",
     "room": "Ở nhà",
     "category": "leisure",
     "weekday": 2,
@@ -471,22 +541,42 @@
   },
   {
     "code": "ENG",
-    "name": "TA Sáng: Grammar Focus 1",
+    "name": "TA Sáng: Grammar 1",
     "class": "Grammar Foundation",
     "room": "Ở nhà",
     "category": "english",
     "weekday": 3,
     "start_time": "06:15:00",
-    "end_time": "07:15:00"
+    "end_time": "07:00:00"
   },
   {
     "code": "CODE",
-    "name": "Ôn Thu thập YC (2h)",
-    "class": "Đọc SRS, vẽ sơ đồ Use Case & User Story (07:15-09:15)",
+    "name": "Chuẩn bị: Thu thập YC (45p)",
+    "class": "Đọc SRS, xem sơ đồ Use Case & Story (45p)",
     "room": "Ở nhà",
     "category": "code",
     "weekday": 3,
-    "start_time": "07:15:00",
+    "start_time": "07:00:00",
+    "end_time": "07:45:00"
+  },
+  {
+    "code": "CODE",
+    "name": "Chuẩn bị: Trí tuệ nhân tạo (45p)",
+    "class": "Đọc lướt slide AI & Khái niệm Agent (45p)",
+    "room": "Ở nhà",
+    "category": "code",
+    "weekday": 3,
+    "start_time": "07:45:00",
+    "end_time": "08:30:00"
+  },
+  {
+    "code": "CODE",
+    "name": "Làm bài tập / Soạn checklist trước khi đi học",
+    "class": "Quick review & Prep",
+    "room": "Ở nhà",
+    "category": "code",
+    "weekday": 3,
+    "start_time": "08:30:00",
     "end_time": "09:15:00"
   },
   {
@@ -512,7 +602,7 @@
   {
     "code": "MEAL",
     "name": "Tan học & Về nhà (30p)",
-    "class": "Di chuyển xe máy (12:40-13:10)",
+    "class": "Di chuyển xe máy",
     "room": "Đường về nhà",
     "category": "life",
     "weekday": 3,
@@ -521,7 +611,7 @@
   },
   {
     "code": "MEAL",
-    "name": "Ăn trưa (13:10 - 13:40)",
+    "name": "Ăn trưa tại nhà",
     "class": "Bữa trưa",
     "room": "Bếp nhà",
     "category": "life",
@@ -531,8 +621,8 @@
   },
   {
     "code": "ENG",
-    "name": "TA Trưa: Grammar 2 & Bài tập",
-    "class": "Grammar Exercises",
+    "name": "TA Trưa: Grammar 2",
+    "class": "Grammar Exercises & Review",
     "room": "Ở nhà",
     "category": "english",
     "weekday": 3,
@@ -540,13 +630,33 @@
     "end_time": "14:45:00"
   },
   {
+    "code": "CODE",
+    "name": "Ôn lại: Thu thập YC (45p)",
+    "class": "Viết SRS, User Stories (45p)",
+    "room": "Ở nhà",
+    "category": "code",
+    "weekday": 3,
+    "start_time": "14:45:00",
+    "end_time": "15:30:00"
+  },
+  {
+    "code": "CODE",
+    "name": "Chuẩn bị: Hệ QT CSDL (45p)",
+    "class": "Đọc trước slide CSDL sáng T6 (45p)",
+    "room": "Ở nhà",
+    "category": "code",
+    "weekday": 3,
+    "start_time": "15:30:00",
+    "end_time": "16:15:00"
+  },
+  {
     "code": "PROJ",
-    "name": "Dự án cá nhân (API & Frontend - Trả lại giờ)",
-    "class": "API & Frontend Sprint",
+    "name": "DA cá nhân: UI / Frontend Sprint",
+    "class": "Xây dựng giao diện dự án",
     "room": "Ở nhà",
     "category": "project",
     "weekday": 3,
-    "start_time": "14:45:00",
+    "start_time": "16:15:00",
     "end_time": "17:00:00"
   },
   {
@@ -570,18 +680,28 @@
     "end_time": "19:00:00"
   },
   {
+    "code": "CODE",
+    "name": "Chuẩn bị: AI (Sáng T6) (45p)",
+    "class": "Tìm kiếm A*, Heuristic, Minimax (45p)",
+    "room": "Ở nhà",
+    "category": "code",
+    "weekday": 3,
+    "start_time": "19:00:00",
+    "end_time": "19:45:00"
+  },
+  {
     "code": "PROJ",
-    "name": "Dự án cá nhân (API & Testing)",
-    "class": "API & Testing Development",
+    "name": "Dự án cá nhân / Code thực hành",
+    "class": "API & Feature Development",
     "room": "Ở nhà",
     "category": "project",
     "weekday": 3,
-    "start_time": "19:00:00",
+    "start_time": "19:45:00",
     "end_time": "21:15:00"
   },
   {
     "code": "ENG",
-    "name": "TA Tối: Writing Application",
+    "name": "TA Tối: Writing App",
     "class": "Writing Application (45p)",
     "room": "Ở nhà",
     "category": "english",
@@ -591,7 +711,7 @@
   },
   {
     "code": "REST",
-    "name": "Giải trí tự do & Thư giãn",
+    "name": "Nghỉ ngơi & Giải trí tự do",
     "class": "Night Routine",
     "room": "Ở nhà",
     "category": "leisure",
@@ -642,8 +762,8 @@
   {
     "code": "REST",
     "name": "Nghỉ giải lao tại trường (20p)",
-    "class": "09:40 - 10:00",
-    "room": "Khuôn viên trường",
+    "class": "Khuôn viên trường",
+    "room": "Trường ĐH",
     "category": "leisure",
     "weekday": 4,
     "start_time": "09:40:00",
@@ -662,7 +782,7 @@
   {
     "code": "MEAL",
     "name": "Tan học & Về nhà (30p)",
-    "class": "Di chuyển xe máy (12:40-13:10)",
+    "class": "Di chuyển xe máy",
     "room": "Đường về nhà",
     "category": "life",
     "weekday": 4,
@@ -671,7 +791,7 @@
   },
   {
     "code": "MEAL",
-    "name": "Ăn trưa (13:10 - 13:40)",
+    "name": "Ăn trưa tại nhà",
     "class": "Bữa trưa",
     "room": "Bếp nhà",
     "category": "life",
@@ -681,8 +801,8 @@
   },
   {
     "code": "ENG",
-    "name": "TA Trưa: Critical Thinking (T-Chart)",
-    "class": "Critical Thinking",
+    "name": "TA Trưa: Critical Thinking",
+    "class": "Critical Thinking (T-Chart)",
     "room": "Ở nhà",
     "category": "english",
     "weekday": 4,
@@ -691,22 +811,32 @@
   },
   {
     "code": "CODE",
-    "name": "Ôn & Code AI (1/2)",
-    "class": "Thuật toán AI (A*, Minimax) (14:45-15:50)",
+    "name": "Ôn lại: Trí tuệ nhân tạo (45p)",
+    "class": "Review thuật toán AI trên lớp (45p)",
     "room": "Ở nhà",
     "category": "code",
     "weekday": 4,
     "start_time": "14:45:00",
-    "end_time": "15:50:00"
+    "end_time": "15:30:00"
   },
   {
     "code": "CODE",
-    "name": "Ôn & Thực hành CSDL (1/2)",
-    "class": "SQL nâng cao, Index tối ưu (15:55-17:00)",
+    "name": "Ôn lại: Hệ QT CSDL (45p)",
+    "class": "Thực hành SQL Trigger & Index (45p)",
     "room": "Ở nhà",
     "category": "code",
     "weekday": 4,
-    "start_time": "15:55:00",
+    "start_time": "15:30:00",
+    "end_time": "16:15:00"
+  },
+  {
+    "code": "CODE",
+    "name": "Thực hành Code Lab & Hoàn thiện bài tập",
+    "class": "Lab AI & CSDL implementation",
+    "room": "Ở nhà",
+    "category": "code",
+    "weekday": 4,
+    "start_time": "16:15:00",
     "end_time": "17:00:00"
   },
   {
@@ -731,8 +861,8 @@
   },
   {
     "code": "PROJ",
-    "name": "Dự án cá nhân (Deploy & CI/CD)",
-    "class": "Deployment & CI/CD Pipeline",
+    "name": "DA cá nhân: Deploy CI/CD",
+    "class": "Deployment, Docker & CI/CD Pipeline",
     "room": "Ở nhà",
     "category": "project",
     "weekday": 4,
@@ -741,8 +871,8 @@
   },
   {
     "code": "ENG",
-    "name": "TA Tối: Grammar for Writing",
-    "class": "Writing Grammar (45p)",
+    "name": "TA Tối: Writing Grammar",
+    "class": "Grammar for Writing (45p)",
     "room": "Ở nhà",
     "category": "english",
     "weekday": 4,
@@ -751,8 +881,8 @@
   },
   {
     "code": "REST",
-    "name": "Friday Night Chill (Phim / Game)",
-    "class": "Friday Chill",
+    "name": "Friday Chill (Phim / Game)",
+    "class": "Friday Chill & Thư giãn",
     "room": "Ở nhà",
     "category": "leisure",
     "weekday": 4,
@@ -781,7 +911,7 @@
   },
   {
     "code": "ENG",
-    "name": "TA Sáng: Writing Mechanics",
+    "name": "TA Sáng: Mechanics",
     "class": "Writing Mechanics",
     "room": "Ở nhà",
     "category": "english",
@@ -791,38 +921,58 @@
   },
   {
     "code": "CODE",
-    "name": "Thuật toán / LeetCode",
-    "class": "Data Structures & Algorithms (07:15-08:30)",
+    "name": "Ôn lại: Trí tuệ nhân tạo (45p)",
+    "class": "Luyện code thuật toán AI (45p)",
     "room": "Ở nhà",
     "category": "code",
     "weekday": 5,
-    "start_time": "07:15:00",
-    "end_time": "08:30:00"
+    "start_time": "07:00:00",
+    "end_time": "07:45:00"
   },
   {
     "code": "CODE",
-    "name": "Ôn & Code AI (2/2)",
-    "class": "Bài tập AI/ML & thuật toán (08:30-09:30)",
+    "name": "LeetCode Thuật toán & Cấu trúc dữ liệu",
+    "class": "Data Structures & Algorithms Problem Solving",
     "room": "Ở nhà",
     "category": "code",
     "weekday": 5,
-    "start_time": "08:30:00",
-    "end_time": "09:30:00"
+    "start_time": "07:45:00",
+    "end_time": "09:40:00"
   },
   {
     "code": "CODE",
-    "name": "Nghiên cứu Tech (Open Source / System)",
-    "class": "Open Source & System Tech (09:30-12:40)",
+    "name": "Ôn lại: CSDL (SQL/Index) (45p)",
+    "class": "Tối ưu truy vấn & Index nâng cao (45p)",
     "room": "Ở nhà",
     "category": "code",
     "weekday": 5,
-    "start_time": "09:30:00",
+    "start_time": "10:00:00",
+    "end_time": "10:45:00"
+  },
+  {
+    "code": "CODE",
+    "name": "Ôn lại: Thu thập YC (SRS) (45p)",
+    "class": "Hoàn thiện tài liệu đặc tả SRS (45p)",
+    "room": "Ở nhà",
+    "category": "code",
+    "weekday": 5,
+    "start_time": "10:45:00",
+    "end_time": "11:30:00"
+  },
+  {
+    "code": "CODE",
+    "name": "Nghiên cứu Tech Open Source & Code tự do",
+    "class": "Open Source & System Exploration",
+    "room": "Ở nhà",
+    "category": "code",
+    "weekday": 5,
+    "start_time": "11:30:00",
     "end_time": "12:40:00"
   },
   {
     "code": "MEAL",
     "name": "Ăn trưa & Nghỉ 20p",
-    "class": "Bữa trưa",
+    "class": "Bữa trưa & Nghỉ ngơi",
     "room": "Bếp nhà",
     "category": "life",
     "weekday": 5,
@@ -831,8 +981,8 @@
   },
   {
     "code": "ENG",
-    "name": "TA Trưa: Hoàn thành Writing Task",
-    "class": "Writing Task Complete",
+    "name": "TA Trưa: Writing Task",
+    "class": "Hoàn thành Writing Task",
     "room": "Ở nhà",
     "category": "english",
     "weekday": 5,
@@ -841,8 +991,8 @@
   },
   {
     "code": "PROJ",
-    "name": "Dự án cá nhân (Sprint Portfolio)",
-    "class": "Portfolio Sprint",
+    "name": "DA cá nhân: Portfolio",
+    "class": "Sprint Portfolio cá nhân",
     "room": "Ở nhà",
     "category": "project",
     "weekday": 5,
@@ -871,8 +1021,8 @@
   },
   {
     "code": "PROJ",
-    "name": "Dự án cá nhân (Sprint Testing & Refactor)",
-    "class": "Testing & Refactor",
+    "name": "DA cá nhân: Testing & Refactor",
+    "class": "Sprint Testing & Code Refactor",
     "room": "Ở nhà",
     "category": "project",
     "weekday": 5,
@@ -881,8 +1031,8 @@
   },
   {
     "code": "ENG",
-    "name": "TA Tối: Academic Writing Review & Sample",
-    "class": "Academic sample review (45p)",
+    "name": "TA Tối: Academic Review",
+    "class": "Academic Writing Review & Sample (45p)",
     "room": "Ở nhà",
     "category": "english",
     "weekday": 5,
@@ -891,8 +1041,8 @@
   },
   {
     "code": "REST",
-    "name": "Thư giãn tại nhà & Thư thái cuối tuần",
-    "class": "Relax & Chill",
+    "name": "Relax cuối tuần",
+    "class": "Thư giãn tại nhà",
     "room": "Ở nhà",
     "category": "leisure",
     "weekday": 5,
@@ -921,8 +1071,8 @@
   },
   {
     "code": "ENG",
-    "name": "TA Sáng: Ôn 100% Anki cả Unit",
-    "class": "Anki Weekly Review",
+    "name": "TA Sáng: Ôn 100% Anki",
+    "class": "Anki Weekly Review cả Unit",
     "room": "Ở nhà",
     "category": "english",
     "weekday": 6,
@@ -931,28 +1081,28 @@
   },
   {
     "code": "CODE",
-    "name": "Thuật toán / LeetCode",
-    "class": "Data Structures & Algorithms (07:15-09:30)",
+    "name": "LeetCode chuyên sâu (2h40)",
+    "class": "Data Structures & Algorithms Deep Dive",
     "room": "Ở nhà",
     "category": "code",
     "weekday": 6,
-    "start_time": "07:15:00",
-    "end_time": "09:30:00"
+    "start_time": "07:00:00",
+    "end_time": "09:40:00"
   },
   {
     "code": "CODE",
-    "name": "Nghiên cứu Tech & Review tuần",
-    "class": "Tech Review & System Study (09:30-12:40)",
+    "name": "Nghiên cứu Tech Open Source & Hệ thống",
+    "class": "Open Source, System Architecture & Review",
     "room": "Ở nhà",
     "category": "code",
     "weekday": 6,
-    "start_time": "09:30:00",
+    "start_time": "10:00:00",
     "end_time": "12:40:00"
   },
   {
     "code": "MEAL",
     "name": "Ăn trưa & Nghỉ 20p",
-    "class": "Bữa trưa",
+    "class": "Bữa trưa & Nghỉ ngơi",
     "room": "Bếp nhà",
     "category": "life",
     "weekday": 6,
@@ -961,8 +1111,8 @@
   },
   {
     "code": "ENG",
-    "name": "TA Trưa: Speaking Test Unit Review",
-    "class": "Speaking Practice & Review",
+    "name": "TA Trưa: Speaking Review",
+    "class": "Speaking Test Unit Review",
     "room": "Ở nhà",
     "category": "english",
     "weekday": 6,
@@ -971,8 +1121,8 @@
   },
   {
     "code": "PROJ",
-    "name": "Dự án cá nhân (Hoàn thiện Docs)",
-    "class": "Documentation & Demo",
+    "name": "DA cá nhân: Docs & Demo",
+    "class": "Documentation, Demo & Release",
     "room": "Ở nhà",
     "category": "project",
     "weekday": 6,
@@ -1000,19 +1150,39 @@
     "end_time": "19:00:00"
   },
   {
-    "code": "PROJ",
-    "name": "Dự án cá nhân (Code Review & Plan tuần mới)",
-    "class": "Review & Next Week Planning",
+    "code": "CODE",
+    "name": "Chuẩn bị: Kiểm thử PM (Tuần mới) (45p)",
+    "class": "Xem trước slide & mục tiêu tuần (45p)",
     "room": "Ở nhà",
-    "category": "project",
+    "category": "code",
     "weekday": 6,
     "start_time": "19:00:00",
+    "end_time": "19:45:00"
+  },
+  {
+    "code": "CODE",
+    "name": "Chuẩn bị: Quản lý DA (Tuần mới) (45p)",
+    "class": "Xem trước slide & task QLDA tuần mới (45p)",
+    "room": "Ở nhà",
+    "category": "code",
+    "weekday": 6,
+    "start_time": "19:45:00",
+    "end_time": "20:30:00"
+  },
+  {
+    "code": "CODE",
+    "name": "Lập kế hoạch & Chuẩn bị mục tiêu tuần mới",
+    "class": "Checklist & Weekly Planning (45p)",
+    "room": "Ở nhà",
+    "category": "code",
+    "weekday": 6,
+    "start_time": "20:30:00",
     "end_time": "21:15:00"
   },
   {
     "code": "ENG",
-    "name": "TA Tối: Soát lỗi bài viết, chốt Unit tuần",
-    "class": "Unit wrap-up & error check (45p)",
+    "name": "TA Tối: Chốt Unit",
+    "class": "Soát lỗi bài viết & chốt Unit tuần (45p)",
     "room": "Ở nhà",
     "category": "english",
     "weekday": 6,
@@ -1021,7 +1191,7 @@
   },
   {
     "code": "REST",
-    "name": "Chuẩn bị tuần mới & Thư giãn",
+    "name": "Chuẩn bị ngủ & Thư giãn",
     "class": "Weekly Prep & Sleep",
     "room": "Phòng ngủ",
     "category": "leisure",

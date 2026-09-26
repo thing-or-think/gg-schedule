@@ -31,44 +31,44 @@ export const MONTH_NAMES = [
 
 export const DAY_THEMES: DayTheme[] = [
   {
-    title: "Thứ 2: Ở lại trường cả ngày (Tối ưu tuyệt đối)",
-    desc: "Nấu cơm & ăn trưa tại nhà lúc 08h • 2 ca học: 10:00 Kiểm thử PM (P.207-B) & 16:00 Quản lý DA (P.104-B) • Học TA & Ôn bài tại Thư viện trường • Tiết kiệm 1h15p di chuyển",
+    title: "Thứ 2: Kiểm thử PM & Quản lý DA",
+    desc: "07:00 Chuẩn bị Kiểm thử • 10:00 Kiểm thử PM (P.207-B) • 14:45 Chuẩn bị QLDA tại TV • 16:00 Quản lý DA (P.104-B) • Tối Ôn Test & Chuẩn bị Mạng",
     icon: "fa-school",
     color: "text-indigo-400"
   },
   {
-    title: "Thứ 3: Lập trình mạng & Lab Socket",
-    desc: "07:00 Lập trình mạng (P.204-A) • 10:15 Ôn & Code Lab Socket TCP/UDP • TA Trưa & Tối • Sprint Feature Dự án",
+    title: "Thứ 3: Lập trình mạng & Ôn tập thực hành",
+    desc: "07:00 Lập trình mạng (P.204-A) • 10:15 Ôn & Code Lab Mạng ngay • TA Trưa & Tối • Sprint Feature • Tối ôn Quản lý DA & BTL",
     icon: "fa-network-wired",
     color: "text-sky-400"
   },
   {
-    title: "Thứ 4: Tự học 100% & Hoàn thành Bài tập lớn",
-    desc: "Cả ngày ở nhà tập trung sâu • Assignment & Bài tập lớn môn học • TA Reading 2 (Phân tích & Inferences) • Core Architecture & DB",
+    title: "Thứ 4: Tự học 100% & Thiết kế Kiến trúc",
+    desc: "Sáng ôn Mạng, Kiểm thử PM, Chuẩn bị Thu thập YC & CSDL • Chiều DA Architecture • Tối code API & Backend",
     icon: "fa-laptop-code",
     color: "text-emerald-400"
   },
   {
     title: "Thứ 5: Thu thập & Phân tích Yêu cầu PM",
-    desc: "Sáng đọc SRS • 10:00 Thu thập YC (P.101-A) • Chiều làm bài tập SRS & User Stories • Tối xây dựng API & Frontend",
+    desc: "Sáng chuẩn bị SRS • 10:00 Thu thập YC (P.101-A) • Chiều viết SRS & Chuẩn bị CSDL • Tối chuẩn bị AI tìm kiếm",
     icon: "fa-file-lines",
     color: "text-purple-400"
   },
   {
     title: "Thứ 6: Trí tuệ nhân tạo & Hệ QT CSDL",
-    desc: "2 ca sáng: 07:00 AI (P.507-B) & 10:00 CSDL (P.201-B) • Chiều Code Lab AI & Thực hành SQL Trigger • Tối Deploy CI/CD",
+    desc: "2 ca sáng: 07:00 AI (P.507-B) & 10:00 CSDL (P.201-B) • Chiều ôn AI & Lab CSDL nâng cao • Tối Deploy CI/CD",
     icon: "fa-brain",
     color: "text-amber-400"
   },
   {
-    title: "Thứ 7: Nghiên cứu Tech & Sprint Portfolio",
-    desc: "Sáng Open Source & Nghiên cứu Tech • Chiều Sprint Portfolio cá nhân • TA Writing Task • Tối Testing & Refactoring",
+    title: "Thứ 7: Ôn tập CSDL, AI & Sprint Portfolio",
+    desc: "Sáng LeetCode & Code AI • 10:00 Ôn CSDL (SQL/Index) & SRS • Chiều Sprint Portfolio • Tối Testing & Refactor",
     icon: "fa-code-branch",
     color: "text-indigo-400"
   },
   {
-    title: "Chủ Nhật: Review tuần & Luyện LeetCode",
-    desc: "Luyện thuật toán / LeetCode chuyên sâu • Ôn 100% Anki cả Unit • Speaking Test Review • Hoàn thiện Docs & Kế hoạch tuần mới",
+    title: "Chủ Nhật: LeetCode chuyên sâu & Kế hoạch tuần mới",
+    desc: "Sáng LeetCode chuyên sâu • 10:00 Tech Open Source • Chiều Docs & Demo • Tối Chuẩn bị tuần mới (Kiểm thử, QLDA)",
     icon: "fa-trophy",
     color: "text-rose-400"
   }
